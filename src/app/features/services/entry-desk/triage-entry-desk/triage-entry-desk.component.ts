@@ -101,36 +101,43 @@ export class TriageEntryDeskComponent implements OnInit {
     });
 
     const id = Number(this.route?.snapshot?.paramMap.get('id'));
-    this.patientService?.getPatientById(id).subscribe((data: any) => {
-      this.patient = data;
+    if (!id || isNaN(id)) {
+      console.warn('No valid patient ID in route (SSR or invalid)');
+      this.addComplaint();
+      return;
+    }
 
+    this.patientService?.getPatientById(id).subscribe((data: any) => {
+      this.patient = data || {};
+      
+      const src = this.patient;
       this.triageForm.patchValue({
-        status: data.status || '',
-        spo2: data.spo2 ?? null,
-        pulse: data.pulse ?? '',
-        dbp: data.dbp ?? '',
-        sbp: data.sbp ?? '',
-        rr: data.rr ?? null,
-        temp: data.temp ?? null,
-        emergencyType: data.emergencyType || 'NON-TRAUMA',
-        triage: data.triage || '',
-        triageNotes: data.triageNotes || '',
-        arrivalMode: data.arrivalMode || '',
-        referralStatus: data.referralStatus || '',
-        triageTimeStamp: data.triageTimeStamp || new Date().toISOString(),
-        submittedBy: data.submittedBy || '',
-        designation: data.designation || '',
+        status: src.status || '',
+        spo2: src.spo2 ?? null,
+        pulse: src.pulse ?? '',
+        dbp: src.dbp ?? '',
+        sbp: src.sbp ?? '',
+        rr: src.rr ?? null,
+        temp: src.temp ?? null,
+        emergencyType: src.emergencyType || 'NON-TRAUMA',
+        triage: src.triage || '',
+        triageNotes: src.triageNotes || '',
+        arrivalMode: src.arrivalMode || '',
+        referralStatus: src.referralStatus || '',
+        triageTimeStamp: src.triageTimeStamp || new Date().toISOString(),
+        submittedBy: src.submittedBy || '',
+        designation: src.designation || '',
 
         //optional engine fields (only patch if present)
-        gcs: data.gcs ?? 15,
-        alertOrResponsive: data.alertOrResponsive ?? true,
-        acuteOnset: data.acuteOnset ?? false,
-        airwayCompromise: data.airwayCompromise ?? false,
-        seizureNow: data.seizureNow ?? false,
+        gcs: src.gcs ?? 15,
+        alertOrResponsive: src.alertOrResponsive ?? true,
+        acuteOnset: src.acuteOnset ?? false,
+        airwayCompromise: src.airwayCompromise ?? false,
+        seizureNow: src.seizureNow ?? false,
       });
 
-      if (data.complaints && data.complaints.length > 0) {
-        data.complaints.forEach((c: any) => {
+      if (src.complaints && src.complaints.length > 0) {
+        src.complaints.forEach((c: any) => {
           this.complaints.push(
             this.fb.group({
               complaint: c.complaint,

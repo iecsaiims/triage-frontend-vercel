@@ -105,7 +105,7 @@ export class DoctorNotesComponent implements OnInit {
       next: (data: any) => (this.emergencyNotes = data.data),
       error: (err: any) => {
         console.error('Emergency fetch error:', err);
-        if (err.status === 404) this.emergencyNotes = [];
+        if (err?.status === 404) this.emergencyNotes = [];
       },
       complete: () => (this.isLoading = false),
     });
@@ -114,7 +114,7 @@ export class DoctorNotesComponent implements OnInit {
       next: (data: any) => (this.progressNotes = data.data),
       error: (err: any) => {
         console.error('Progress fetch error:', err);
-        if (err.status === 404) this.progressNotes = [];
+        if (err?.status === 404) this.progressNotes = [];
       },
     });
 
@@ -122,7 +122,7 @@ export class DoctorNotesComponent implements OnInit {
       next: (data: any) => (this.traumaNotes = data.data),
       error: (err: any) => {
         console.error('Trauma fetch error:', err);
-        if (err.status === 404) this.traumaNotes = [];
+        if (err?.status === 404) this.traumaNotes = [];
       },
     });
 

@@ -11,6 +11,13 @@ import { fileURLToPath } from 'node:url';
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
+// SSR environment polyfills for browser-only globals
+if (typeof globalThis.alert !== 'function') {
+  (globalThis as any).alert = (msg?: any) => {
+    console.warn('[SSR alert]', msg);
+  };
+}
+
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 

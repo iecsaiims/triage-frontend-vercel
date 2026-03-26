@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +23,17 @@ import { AuthService } from '../../../../api/auth.service';
 })
 export class PatientListComponent implements OnInit {
   role: string | null = null;
+  isBrowser: boolean;
+
+  constructor(
+    public patientService: PatientService,
+    public router: Router,
+    public authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
   displayedColumns: string[] = [
     'name',
     'crNumber',
@@ -37,11 +49,14 @@ export class PatientListComponent implements OnInit {
   patients: any[] = [];
   isMenuOpen = false;
 
-  constructor(public patientService: PatientService, public router: Router, public authService: AuthService) {}
-
   ngOnInit() {
     this.role = this.authService.role;
     console.log('User Role:', this.role);
+
+    if (!this.isBrowser) {
+      return;
+    }
+
     this.patientService.getPatients().subscribe(
       (response: any) => {
         this.patients = response.data; // Use only the 'data' array from response

@@ -1,0 +1,244 @@
+<!-- Patient Details -->
+<section class="section" *ngIf="patient">
+  <h3 class="sub-heading">Patient Details</h3>
+  <div class="patient-details">
+    <div><strong>Name:</strong> {{ patient?.name }}</div>
+    <div><strong>Guardian Name:</strong> {{ patient?.guardianName }}</div>
+    <div><strong>Age:</strong> {{ patient?.age }}</div>
+    <div><strong>Gender:</strong> {{ patient?.gender }}</div>
+  </div>
+</section>
+
+<!-- Intake Form -->
+<section class="section">
+  <h3 class="sub-heading">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="selectedTemplate = !selectedTemplate"
+    >
+      {{ selectedTemplate ? '➖ Close Intake/Output' : '➕ Add Intake/Output' }}
+    </button>
+  </h3>
+
+  <!-- Form Start -->
+  <form
+    *ngIf="selectedTemplate"
+    (ngSubmit)="saveDetails(ioForm)"
+    #ioForm="ngForm"
+    class="io-form"
+  >
+    <mat-card>
+      <!-- Intake Form -->
+      <mat-card-header>
+        <h3>Intake Details</h3>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="intakeDate"
+              [(ngModel)]="intakeData.inDate"
+              name="inDate"
+              [matDatepickerFilter]="dateFilter"
+              required
+            />
+            <mat-datepicker-toggle matSuffix [for]="intakeDate"></mat-datepicker-toggle>
+            <mat-datepicker #intakeDate></mat-datepicker>
+            <mat-error *ngIf="ioForm.submitted && !intakeData.inDate">Date is required</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Time</mat-label>
+            <input
+              matInput
+              type="time"
+              [(ngModel)]="intakeData.inTime"
+              name="inTime"
+              required
+            />
+            <mat-error *ngIf="ioForm.submitted && !intakeData.inTime">Time is required</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Parameter</mat-label>
+            <mat-select [(ngModel)]="intakeData.inParameter" name="inParameter" required>
+              <mat-option *ngFor="let p of inParameters" [value]="p">{{ p }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="ioForm.submitted && !intakeData.inParameter">Parameter is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Route</mat-label>
+            <input matInput [(ngModel)]="intakeData.routeIn" name="routeIn" required />
+            <mat-error *ngIf="ioForm.submitted && !intakeData.routeIn">Route is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Volume</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="intakeData.volumeIn"
+              name="volumeIn"
+              required
+              min="1"
+            />
+            <mat-error *ngIf="ioForm.submitted && !intakeData.volumeIn">Volume is required</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Remarks</mat-label>
+            <input matInput [(ngModel)]="intakeData.remarksIn" name="remarksIn" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <!-- Output Form -->
+      <mat-card-header>
+        <h3>Output Details</h3>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="outputDate"
+              [(ngModel)]="outputData.outDate"
+              name="outDate"
+              [matDatepickerFilter]="dateFilter"
+              required
+            />
+            <mat-datepicker-toggle matSuffix [for]="outputDate"></mat-datepicker-toggle>
+            <mat-datepicker #outputDate></mat-datepicker>
+            <mat-error *ngIf="ioForm.submitted && !outputData.outDate">Date is required</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Time</mat-label>
+            <input
+              matInput
+              type="time"
+              [(ngModel)]="outputData.outTime"
+              name="outTime"
+              required
+            />
+            <mat-error *ngIf="ioForm.submitted && !outputData.outTime">Time is required</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Parameter</mat-label>
+            <mat-select [(ngModel)]="outputData.outParameter" name="outParameter" required>
+              <mat-option *ngFor="let p of outParameters" [value]="p">{{ p }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="ioForm.submitted && !outputData.outParameter">Parameter is required</mat-error>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Route</mat-label>
+            <input matInput [(ngModel)]="outputData.routeOut" name="routeOut" required />
+            <mat-error *ngIf="ioForm.submitted && !outputData.routeOut">Route is required</mat-error>
+          </mat-form-field> -->
+        </div>
+       <div class="form-row">
+         <mat-form-field appearance="outline">
+           <mat-label>Volume</mat-label>
+           <input
+             matInput
+             type="number"
+             [(ngModel)]="outputData.volumeOut"
+             name="volumeOut"
+             required
+             min="1"
+           />
+           <mat-error *ngIf="ioForm.submitted && !outputData.volumeOut">Volume is required</mat-error>
+         </mat-form-field>
+ 
+         <mat-form-field appearance="outline" class="full-width">
+           <mat-label>Remarks</mat-label>
+           <input matInput [(ngModel)]="outputData.remarksOut" name="remarksOut" />
+         </mat-form-field>
+       </div>
+      </mat-card-content>
+
+      <!-- Save Button -->
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit">
+          Save
+        </button>
+      </div>
+    </mat-card>
+  </form>
+</section>
+
+
+<!-- Saved Records -->
+<section *ngIf="intakeOutputRecords.length > 0">
+  <h3>Saved Intake/Output</h3>
+  <div *ngFor="let rec of intakeOutputRecords" class="lft-card">
+    <!-- Card Header -->
+    <div class="entry-header">
+      <div><strong>Nurse:</strong> {{ rec.submittedBy }}</div>
+      <div><strong>Designation:</strong> {{ rec.designation }}</div>
+      <div>
+        <strong>Date:</strong> {{ rec.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div><strong>Time:</strong> {{ rec.createdAt | date : "shortTime" }}</div>
+      <mat-slide-toggle
+        [(ngModel)]="rec.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      ></mat-slide-toggle>
+    </div>
+    <!-- Details Section -->
+    <div *ngIf="rec.showDetails" class="cbc-grid">
+      <!-- Intake Section -->
+      <div class="cbc-item" *ngIf="rec.inParameter">
+        <h4>Intake Details</h4>
+        <div class="form-row">
+          <p><strong>Date:</strong> {{ rec.inDate | date : "dd-MM-yyyy" }}</p>
+          <p><strong>Time:</strong> {{ rec.inTime }}</p>
+          <p *ngIf="rec.inParameter">
+            <strong>Parameter:</strong> {{ rec.inParameter }}
+          </p>
+        </div>
+        <div class="form-row">
+          <p *ngIf="rec.routeIn"><strong>Route:</strong> {{ rec.routeIn }}</p>
+          <p *ngIf="rec.volumeIn">
+            <strong>Volume:</strong> {{ rec.volumeIn }} ml
+          </p>
+          <p *ngIf="rec.remarksIn">
+            <strong>Remarks:</strong> {{ rec.remarksIn }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Output Section -->
+      <div class="cbc-item" *ngIf="rec.outParameter">
+        <h4>Output Details</h4>
+        <div class="form-row">
+          <p><strong>Date:</strong> {{ rec.outDate | date : "dd-MM-yyyy" }}</p>
+          <p><strong>Time:</strong> {{ rec.outTime }}</p>
+          <p *ngIf="rec.outParameter">
+            <strong>Parameter:</strong> {{ rec.outParameter }}
+          </p>
+        </div>
+        <div class="form-row">
+          <p *ngIf="rec.volumeOut">
+            <strong>Volume:</strong> {{ rec.volumeOut }} ml
+          </p>
+          <!-- <p *ngIf="rec.routeOut"><strong>Route:</strong> {{ rec.routeOut }}</p> -->
+          <p *ngIf="rec.remarksOut">
+            <strong>Remarks:</strong> {{ rec.remarksOut }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

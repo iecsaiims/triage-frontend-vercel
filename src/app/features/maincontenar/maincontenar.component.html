@@ -1,0 +1,15 @@
+<app-header></app-header>
+
+<div class="layout-container">
+ <div class="sidebar" *ngIf="deskType == 'ed-desk'">
+  <app-side-header></app-side-header>
+</div>
+
+<div class="sidebar" *ngIf="deskType == 'nursing-desk'">
+  <app-emergency-nursing-desk-header></app-emergency-nursing-desk-header>
+</div>
+
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

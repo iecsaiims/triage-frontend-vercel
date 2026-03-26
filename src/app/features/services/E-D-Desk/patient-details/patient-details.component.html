@@ -1,0 +1,143 @@
+<app-header></app-header>
+<div class="top-bar">
+  <div class="summary"></div>
+
+  <div class="header-section" >
+    <div class="header-with-logo">
+      <img
+        src="../../../assets/aiimslogo.jpg"
+        style="width: 100px"
+        alt="AIIMS Raipur HIS Banner"
+        class="image_container"
+      />
+    </div>
+    <div class="header-container">
+      <h2 class="page-title">🩺 Digital Doctor’s Desk</h2>
+      <h3 class="sub-title">
+        Welcome, <span class="doctor-name">Dr {{ userName }}</span>
+      </h3>
+    </div>
+  </div>
+     <div class="header-section" *ngIf="designation === 'Nursing-Staff'">
+    <div class="header-with-logo">
+      <img
+        src="../../../assets/aiimslogo.jpg"
+        style="width: 100px"
+        alt="AIIMS Raipur HIS Banner"
+        class="image_container"
+      />
+    </div>
+    <div class="header-container">
+      <h2 class="page-title">💊 Nursing Desk</h2>
+      <h3 class="sub-title"><span class="doctor-name">{{ userName }}</span>
+      </h3>
+    </div>
+  </div>
+  <div class="shift-info">
+    <p><strong class="label">Shift:</strong> Morning/Evening/Night</p>
+    <p><strong class="label">Triage officer:</strong> (Name)</p>
+    <p><strong class="label">Shift in charge:</strong> (Name)</p>
+    <p><strong class="label">Faculty in charge:</strong> (Name)</p>
+    <p><strong class="label">SR on duty:</strong> (Name)</p>
+
+    <a href="#" class="directory-link">Departmental Directory</a>
+  </div>
+</div>
+<div class="container">
+  <div class="table-wrapper">
+    <table class="patient-table">
+      <thead>
+        <tr>
+          <th>S.no</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Patient Name</th>
+          <th>Age / Sex</th>
+          <th>CR no</th>
+          <th>Trauma / Non-Trauma</th>
+          <th>Triage officer</th>
+          <th>Initial Triage</th>
+          <th>1st assessment</th>
+          <th>Disposition</th>
+          <th *ngIf="designation != 'Nursing-Staff' ">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let patient of patients; let i = index"
+          (click)="viewDetails(patient)"
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ patient?.createdAt | date : "dd/MM/yyyy" }}</td>
+          <td>{{ patient?.createdAt | date : "hh:mm a" }}</td>
+          <td>{{ patient?.name }}</td>
+          <td>{{ patient?.age }} / {{ patient?.gender }}</td>
+          <td>{{ patient?.crNumber }}</td>
+          <td>{{ getLatestEmergencyType(patient.patientTriage) }}</td>
+          <td>{{ patient?.submittedBy || "Pending" }}</td>
+          <td>
+            <span
+              class="triage-badge"
+              [ngClass]="
+                getTriageColorClass(getLatestTriage(patient.patientTriage))
+              "
+            >
+              {{ getLatestTriage(patient.patientTriage) }}
+            </span>
+          </td>
+          <td>
+            <span
+              class="triage-badge"
+              [ngClass]="
+                getStatusClass(getAssessmentStatus(patient.primaryAssessment))
+              "
+            >
+              {{ getAssessmentStatus(patient.primaryAssessment) }}
+            </span>
+          </td>
+
+          <td>
+            <span
+              class="triage-badge"
+              [ngClass]="
+                getStatusClass(getDischargeStatus(patient.DischargeSummary))
+              "
+            >
+              {{ getDischargeStatus(patient.DischargeSummary) }}
+            </span>
+          </td>
+
+          <td class="action-icons" *ngIf="designation != 'Doctor' ">
+            <!-- Edit -->
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editPatient(patient, $event)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <!-- Delete -->
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deletePatient(patient, $event)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="button-row">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="router.navigate(['/logout'])"
+    >
+      🚪 Logout
+    </button>
+  </div>
+</div>

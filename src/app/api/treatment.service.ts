@@ -1,0 +1,41 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TreatmentService {
+  private baseUrl = 'http://localhost:8000/api/treatment';
+
+  constructor(private http: HttpClient) {}
+
+  private getHeaders() {
+    const token = localStorage?.getItem('authToken');
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
+  // ---- Doctor Treatment ----
+  saveTreatment(data: any) {
+    return this.http.post(`${this.baseUrl}/save-treatment`, data, { headers: this.getHeaders() });
+  }
+
+  getTreatment(patientId: number) {
+    let url = `${this.baseUrl}/get-treatment/${patientId}`;
+    // if (name) url += `?name=${encodeURIComponent(name)}`;
+    return this.http.get(url, { headers: this.getHeaders() });
+  }
+
+  // ---- Nursing Treatment ----
+  saveTreatmentNursing(data: any) {
+    return this.http.post(`${this.baseUrl}/save-treatment-nursing`, data, { headers: this.getHeaders() });
+  }
+
+  getTreatmentNursing(patientId: number) {
+    let url = `${this.baseUrl}/get-treatment-nursing/${patientId}`;
+    // if (name) url += `?name=${encodeURIComponent(name)}`;
+    return this.http.get(url, { headers: this.getHeaders() });
+  }
+}

@@ -1,0 +1,73 @@
+<header class="header">
+  <div class="header-top">
+    <div class="aiims-heading">
+      <span>अखिल भारतीय आयुर्विज्ञान संस्थान, रायपुर</span>
+      <span>All India Institute of Medical Sciences, Raipur</span>
+    </div>
+  </div>
+
+  <nav class="nav-bar" *ngIf="!isMenuOpen">
+    <span class="site-title">SMART-ER</span>
+    <div class="nav-links">
+      <nav class="nav-links">
+        <button (click)="navigateTo('/live-dashboard')">Dashboard</button>
+        <button (click)="navigateTo('/service')">Emergency</button>
+        <button (click)="navigateTo('/service')">OPD</button>
+        <button (click)="navigateTo('/service')">E M R</button>
+        <button (click)="navigateTo('')">Logout</button>
+      </nav>
+    </div>
+  </nav>
+
+  <div class="dropdown-menu" *ngIf="isMenuOpen">
+    <nav class="nav-links">
+      <button (click)="navigateTo('/service')">Emergency</button>
+      <button (click)="navigateTo('/service')">OPD</button>
+      <button (click)="navigateTo('/service')">E M R</button>
+      <button (click)="navigateTo('')">Logout</button>
+    </nav>
+  </div>
+</header>
+
+<section class="services-section">
+  <h2>Our Services</h2>
+  <div class="card-container">
+    <div class="service-card" *ngIf="role === 'r' || role === 'f'">
+      <div class="icon-placeholder">📚</div>
+      <h3>Patient Registration</h3>
+      <p>Quick and hassle-free patient registration.</p>
+      <a [routerLink]="['/patient-added']"><button>View</button></a>
+    </div>
+    <div
+      class="service-card"
+      *ngIf="role === 't' || role === 'n' || role === 'f'"
+    >
+      <div class="icon-placeholder">🏥</div>
+      <h3>Triage Entry Desk</h3>
+      <p>First point of contact for emergency cases.</p>
+      <a [routerLink]="['/triage-list']"><button>View</button></a>
+    </div>
+
+    <div class="service-card" *ngIf="role === 'd' || role === 'f'">
+      <div class="icon-placeholder">📋</div>
+      <h3>E D Desk</h3>
+      <p>Emergency registrations and support.</p>
+      <a [routerLink]="['/ed-desk/patient-details']"><button>View</button></a>
+    </div>
+
+    <div class="service-card" *ngIf="role === 'n' || role === 'f'">
+      <div class="icon-placeholder">🩺</div>
+      <h3>Emergency Nursing Desk</h3>
+      <p>24/7 nursing assistance and patient care.</p>
+      <a [routerLink]="['/nursing-desk/patient-details']"
+        ><button>View</button></a
+      >
+    </div>
+    <div class="service-card"  *ngIf="role === 'n' || role === 'f'">
+      <div class="icon-placeholder">🗂️</div>
+      <h3>ENC Desk</h3>
+      <p>Manage patient assessments and nursing care workflows.</p>
+      <a [routerLink]="['/enc-list']"><button>View</button></a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+<app-header></app-header>
+<div class="top-bar">
+  <div class="summary">
+    <span><strong>Total Records: </strong> {{ totalRecords }}</span>
+    <span><strong>Page:</strong> {{ currentPage }} / {{ totalPages }}</span>
+  </div>
+
+  <div>
+    <div class="header-with-logo">
+      <img
+        src="../../../assets/aiimslogo.jpg"
+        style="width: 100px"
+        alt="AIIMS Raipur HIS Banner"
+        class="image_container"
+      />
+    </div>
+    <h2 class="page-title">Digital Triage Desk</h2>
+  </div>
+  <div class="shift-info">
+    <p><strong class="label">Shift:</strong> Morning/Evening/Night</p>
+    <p><strong class="label">Triage officer:</strong> (Name)</p>
+    <p><strong class="label">Shift in charge:</strong> (Name)</p>
+    <p><strong class="label">Faculty in charge:</strong> (Name)</p>
+    <p><strong class="label">SR on duty:</strong> (Name)</p>
+
+    <a href="#" class="directory-link">Departmental Directory</a>
+  </div>
+</div>
+<div class="container">
+  <div class="table-wrapper">
+    <table class="patient-table">
+      <thead>
+        <tr>
+          <th>S.no</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Patient Name</th>
+          <th>Age / Sex</th>
+          <th>CR no</th>
+          <th>Trauma / Non-Trauma</th>
+          <th>Triage officer</th>
+          <th>Triage Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let patient of patients; let i = index"
+          (click)="viewDetails(patient)"
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ patient?.createdAt | date : "dd/MM/yyyy" }}</td>
+          <td>{{ patient?.createdAt | date : "hh:mm a" }}</td>
+          <td>{{ patient?.name }}</td>
+          <td>{{ patient?.age }} / {{ patient?.gender }}</td>
+          <td>{{ patient?.crNumber }}</td>
+          <td>{{ getLatestEmergencyType(patient.patientTriage) }}</td>
+          <td>{{ patient?.submittedBy || "Pending" }}</td>
+          <td>
+            <span
+              class="triage-badge"
+              [ngClass]="
+                getTriageColorClass(getLatestTriage(patient.patientTriage))
+              "
+            >
+              {{ getLatestTriage(patient.patientTriage) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="button-row">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="router.navigate(['/logout'])"
+    >
+      🚪 Logout
+    </button>
+  </div>
+</div>

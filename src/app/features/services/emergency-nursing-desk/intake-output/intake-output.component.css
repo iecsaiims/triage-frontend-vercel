@@ -1,0 +1,136 @@
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 24px;
+}
+
+.section {
+  margin-top: 32px;
+  padding: 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+.section:hover {
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.sub-heading {
+  color: #1976d2;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+mat-form-field {
+  flex: 1;
+  min-width: 220px;
+}
+.full-width {
+  flex: 2;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+button[mat-raised-button] {
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #333;
+}
+.grid-3 div {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 500;
+}
+
+.lft-card {
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.lft-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.cbc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.cbc-item {
+  background: #fdfdfd;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.cbc-item h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1976d2;
+}
+.cbc-item p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+::ng-deep .custom-slide-toggle {
+  transform: scale(0.8);
+}
+::ng-deep .custom-slide-toggle .mdc-switch__track::after {
+  background: #1976d2 !important;
+}
+::ng-deep .mdc-switch--selected .mdc-switch__icon {
+  fill: #1976d2 !important;
+}
+.patient-details{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}

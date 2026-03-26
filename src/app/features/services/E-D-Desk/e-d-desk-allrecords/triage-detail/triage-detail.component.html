@@ -1,0 +1,67 @@
+<section class="section">
+  <!-- Patient Info Header -->
+  <div class="patient-info-header mat-elevation-z2">
+    <h3 class="sub-heading">Patient Detail</h3>
+
+    <div class="info-row">
+      <div><strong>Name:</strong> {{ patient?.name }}</div>
+      <div><strong>CR No.:</strong> {{ patient?.cr_number }}</div>
+    </div>
+    <div class="info-row">
+      <div>
+        <strong>Age / Gender:</strong> {{ patient?.age }} Yr /
+        {{ patient?.gender }}
+      </div>
+      <div><strong>Primary Category:</strong> {{ patient?.category }}</div>
+    </div>
+    <div class="info-row">
+      <div><strong>Department:</strong> {{ patient?.department }}</div>
+      <div><strong>Room No.:</strong> {{ patient?.room }}</div>
+    </div>
+    <div class="info-row">
+      <div><strong>Visit Date:</strong> {{ patient?.visitDate }}</div>
+      <div><strong>Visit Time:</strong> {{ patient?.visitTime }}</div>
+    </div>
+  </div>
+
+  <!-- Triage History Table -->
+  <h3 class="sub-heading">Triage History</h3>
+
+  <table
+    mat-table
+    [dataSource]="triageData"
+    class="mat-elevation-z8 full-width-table"
+  >
+    <!-- Triage Column -->
+    <ng-container matColumnDef="triage">
+      <th mat-header-cell *matHeaderCellDef>Triage Level</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="triage-badge" [ngClass]="element.triage.toLowerCase()">
+          {{ element.triage }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Triage Notes Column -->
+    <ng-container matColumnDef="triageNotes">
+      <th mat-header-cell *matHeaderCellDef>Notes</th>
+      <td mat-cell *matCellDef="let element">{{ element?.triageNotes }}</td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let element">{{ element?.date }}</td>
+    </ng-container>
+
+    <!-- Time Column -->
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let element">{{ element?.time }}</td>
+    </ng-container>
+
+    <!-- Header and Row -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</section>

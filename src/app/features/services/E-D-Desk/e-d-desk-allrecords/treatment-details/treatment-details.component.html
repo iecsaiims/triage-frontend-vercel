@@ -1,0 +1,146 @@
+<!-- Patient Details -->
+<section class="section" *ngIf="patient">
+  <h3 class="sub-heading">Patient Details</h3>
+  <div class="grid-3">
+    <div><strong>Name:</strong> {{ patient?.name }}</div>
+    <div><strong>Guardian Name:</strong> {{ patient?.guardianName }}</div>
+    <div><strong>Age:</strong> {{ patient?.age }}</div>
+    <div><strong>Gender:</strong> {{ patient?.gender }}</div>
+    <div><strong>CR Number:</strong> {{ patient?.crNumber }}</div>
+    <div><strong>Department:</strong> {{ patient?.department }}</div>
+  </div>
+</section>
+
+<!-- Add Treatment Toggle Button -->
+<section class="section">
+  <h3 class="sub-heading">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="showTreatmentForm = !showTreatmentForm"
+    >
+      {{ showTreatmentForm ? "➖ Close Treatment Form" : "➕ Add Treatment" }}
+    </button>
+  </h3>
+
+  <!-- Treatment Form -->
+  <form *ngIf="showTreatmentForm" (ngSubmit)="saveTreatment()">
+    <div class="treatment-section">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="treatmentData.TreatmentDate"
+          name="date"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Drug Name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="treatmentData.drugName"
+          name="drugName"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Dose</mat-label>
+        <input matInput [(ngModel)]="treatmentData.dose" name="dose" />
+      </mat-form-field>
+    </div>
+    <div class="treatment-section">
+      <!-- <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Route</mat-label>
+        <input matInput [(ngModel)]="treatmentData.route" name="route" />
+      </mat-form-field> -->
+
+      <mat-form-field appearance="outline" class="form-field" style="width: 100%;">
+  <mat-label>Route</mat-label>
+  <mat-select [(ngModel)]="treatmentData.route" name="route">
+    <mat-option value="">Select Route</mat-option>
+    <mat-option value="IV">I/V</mat-option>
+    <mat-option value="IM">I/M</mat-option>
+    <mat-option value="Oral">Oral</mat-option>
+    <mat-option value="PR">Per Rectal</mat-option>
+    <mat-option value="RT">Through RT</mat-option>
+    <mat-option value="ID">I/D</mat-option>
+    <mat-option value="SC">S/C</mat-option>
+  </mat-select>
+</mat-form-field>
+
+      <!-- <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Frequency</mat-label>
+        <input
+          matInput
+          [(ngModel)]="treatmentData.frequency"
+          name="frequency"
+        />
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="form-field" style="width: 100%;">
+  <mat-label>Frequency</mat-label>
+  <mat-select [(ngModel)]="treatmentData.frequency" name="frequency">
+    <mat-option value="">Select Frequency </mat-option>
+    <mat-option value="Stat">Stat</mat-option>
+    <mat-option value="SOS">SOS</mat-option>
+    <mat-option value="OD">OD</mat-option>
+    <mat-option value="ORD">ORD</mat-option>
+    <mat-option value="TDS">TDS</mat-option>
+    <mat-option value="QID">QID</mat-option>
+  </mat-select>
+</mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Prescribed at</mat-label>
+        <input
+          matInput
+          type="time"
+          [(ngModel)]="treatmentData.TreatmentTime"
+          name="time"
+          required
+        />
+      </mat-form-field>
+    </div>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        💾 Save Treatment
+      </button>
+    </div>
+  </form>
+</section>
+
+<!-- Treatment History -->
+<section class="section" *ngIf="treatments.length > 0">
+  <h3 class="sub-heading">📋 Treatment History</h3>
+
+  <div *ngFor="let t of treatments">
+    <div class="entry-header">
+      <div><strong>Doctor:</strong> {{ t?.submitted_by }}</div>
+      <div><strong>Designation:</strong> {{ t?.designation }}</div>
+      <div><strong>Date:</strong> {{ t?.createdAt | date : "dd-MM-yyyy" }}</div>
+      <div>
+        <strong>🕒 Time:</strong> {{ t?.createdAt | date : "shortTime" }}
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="t.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+    <div class="treatment-card" *ngIf="t.showDetails">
+      <div class="grid-2"><strong>Drug Name:</strong> {{ t.drugName }}</div>
+      <div class="grid-2"><strong>Dose:</strong> {{ t.dose}}</div>
+      <div class="grid-2">
+        <strong>Frequency:</strong> {{ t.frequency}}
+      </div>
+      <div class="grid-2"><strong>Route:</strong> {{ t.route}}</div>
+      <div><strong>Prescribed by:</strong> {{ t?.submitted_by }}</div>
+    </div>
+  </div>
+</section>

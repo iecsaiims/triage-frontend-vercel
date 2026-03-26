@@ -1,0 +1,59 @@
+<section>
+  <h3 class="sub-heading">Diagnosis</h3>
+
+  <!-- Remark (textarea for input) -->
+  <mat-form-field appearance="outline" class="form-field full-width">
+    <mat-label>Enter Diagnosis Remark</mat-label>
+    <textarea
+      matInput
+      rows="3"
+      [(ngModel)]="remark"
+      name="remark"
+      placeholder="Write diagnosis remark here..."
+    ></textarea>
+  </mat-form-field>
+
+  <!-- Save button -->
+  <div class="btn-container">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSave()"
+    >
+      Save
+    </button>
+  </div>
+</section>
+
+<!-- Saved Diagnosis -->
+<section *ngIf="diagnosisRecords.length > 0">
+  <h3 class="sub-heading">Saved Diagnosis</h3>
+
+  <div *ngFor="let rec of diagnosisRecords" class="lft-card">
+    <!-- Card Header -->
+    <div class="entry-header">
+      <div><strong>Doctor:</strong> {{ rec.submittedBy || 'N/A' }}</div>
+      <div><strong>Designation:</strong> {{ rec.designation || 'N/A' }}</div>
+      <div>
+        <strong>Date:</strong> {{ rec.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div><strong>Time:</strong> {{ rec.createdAt | date : "shortTime" }}</div>
+
+      <mat-slide-toggle
+        [(ngModel)]="rec.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      ></mat-slide-toggle>
+    </div>
+
+    <!-- Details Section -->
+    <div *ngIf="rec.showDetails" class="cbc-grid">
+      <div class="cbc-item">
+        <h4>Diagnosis Details</h4>
+        <div class="form-row">
+          <p><strong>Remark:</strong> {{ rec.remark }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

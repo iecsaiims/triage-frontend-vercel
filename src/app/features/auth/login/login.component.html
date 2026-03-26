@@ -1,0 +1,123 @@
+<div class="auth-wrapper">
+  <div class="auth-cards">
+    <!-- Left Card (Brand / Image) -->
+    <mat-card class="brand-card">
+      <div class="brand-overlay"></div>
+      <div class="brand-content">
+        <img
+          src="../../../assets/aiimslogo.jpg"
+          alt="AIIMS Logo"
+          class="brand-logo"
+        />
+        <h1 class="brand-title">SMART-ER</h1>
+        <p class="brand-subtitle">An AIIMS Raipur Paperless Emergency Initiative</p>
+
+        <ul class="brand-bullets">
+          <li>Secure Access</li>
+          <li>Role-based Modules</li>
+          <li>Paperless Workflow</li>
+        </ul>
+      </div>
+    </mat-card>
+
+    <!-- Right Card (Form: Login/Signup) -->
+    <mat-card class="form-card">
+      <div class="form-header">
+        <h2>{{ isLoginMode ? "Login" : "Signup" }}</h2>
+
+        <!-- Toggle Buttons (same function you already have) -->
+        <div class="mode-toggle">
+          <button
+            mat-button
+            [disabled]="isLoginMode"
+            (click)="isLoginMode = true"
+          >
+            Login
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            [disabled]="!isLoginMode"
+            (click)="isLoginMode = false"
+          >
+            Signup
+          </button>
+        </div>
+      </div>
+
+      <!-- Signup -->
+      <ng-container *ngIf="!isLoginMode">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" (input)="onInput($event, 'name')" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" (input)="onInput($event, 'email')" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Mobile Number</mat-label>
+          <input matInput type="tel" (input)="onInput($event, 'mobile')" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Designation</mat-label>
+          <mat-select (selectionChange)="onInput($event, 'designation')">
+            <mat-option value="Doctor">Doctor</mat-option>
+            <mat-option value="Triage-officer">Triage Officer</mat-option>
+            <mat-option value="Nursing-Staff">Nursing Staff</mat-option>
+            <mat-option value="Admin">Admin</mat-option>
+            <mat-option value="Registration-desk">Registration desk</mat-option>
+            <mat-option value="Faculty">Faculty</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            (input)="onInput($event, 'password')"
+          />
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Login -->
+      <ng-container *ngIf="isLoginMode">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" (input)="onInput($event, 'email')" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            (input)="onInput($event, 'password')"
+          />
+        </mat-form-field>
+      </ng-container>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="action-btn"
+        (click)="onSubmit()"
+      >
+        {{ isLoginMode ? "Login" : "Signup" }}
+      </button>
+
+      <p class="switch" (click)="toggleMode()">
+        {{
+          isLoginMode
+            ? "Don't have an account? Signup"
+            : "Already have an account? Login"
+        }}
+      </p>
+
+      <p class="message" *ngIf="message">{{ message }}</p>
+    </mat-card>
+  </div>
+</div>

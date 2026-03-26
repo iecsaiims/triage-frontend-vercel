@@ -1,0 +1,283 @@
+<!-- Patient Details -->
+<section class="section" *ngIf="patient">
+  <h3 class="sub-heading">Patient Details</h3>
+  <div class="grid-3">
+    <div><strong>Name:</strong> {{ patient?.name }}</div>
+    <div><strong>Guardian Name:</strong> {{ patient?.guardianName }}</div>
+    <div><strong>Age:</strong> {{ patient?.age }}</div>
+    <div><strong>Gender:</strong> {{ patient?.gender }}</div>
+    <div><strong>CR Number:</strong> {{ patient?.crNumber }}</div>
+  </div>
+</section>
+
+<!-- Vitals Form -->
+<section class="section">
+  <h3 class="sub-heading">🩺 Record Vitals</h3>
+  <mat-card-content>
+    <!-- <div> -->
+    <div class="form-row">
+      <div class="allfildes-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Weight (Kg)</mat-label>
+          <input
+            matInput
+            type="number"
+            name="weightKg"
+            [(ngModel)]="vitalsData.weightKg"
+            #weightKg="ngModel"
+            min="1"
+            max="300"
+            (input)="calculateBMI()"
+          />
+          <mat-error *ngIf="weightKg.errors?.['min']" class="error-message">
+            Weight must be greater than 0
+          </mat-error>
+
+          <mat-error *ngIf="weightKg.errors?.['max']" class="error-message">
+            Weight cannot be more than 300
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Pulse Rate</mat-label>
+          <input
+            matInput
+            type="number"
+            name="pulseRate"
+            [(ngModel)]="vitalsData.pulseRate"
+            #pulseRate="ngModel"
+            min="0"
+            max="300"
+          />
+
+          <mat-error *ngIf="pulseRate.errors?.['min']">
+            Pulse rate must be at least 0
+          </mat-error>
+          <mat-error *ngIf="pulseRate.errors?.['max']">
+            Pulse rate cannot be more than 300
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>SBP</mat-label>
+          <input
+            matInput
+            type="number"
+            name="systolicBP"
+            [(ngModel)]="vitalsData.systolicBP"
+            (ngModelChange)="calculateMBP()"
+            #systolicBP="ngModel"
+            min="0"
+            max="300"
+          />
+
+          <mat-error *ngIf="systolicBP.invalid && systolicBP.touched">
+            <span *ngIf="systolicBP.errors?.['min']">Value must be ≥ 0</span>
+            <span *ngIf="systolicBP.errors?.['max']">Value must be ≤ 300</span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Temp (°F)</mat-label>
+          <input
+            matInput
+            type="number"
+            name="temperature"
+            [(ngModel)]="vitalsData.temperature"
+            #temperature="ngModel"
+            min="90"
+            max="110"
+          />
+          <mat-error
+            *ngIf="
+              temperature.invalid && (temperature.dirty || temperature.touched)
+            "
+          >
+            <span *ngIf="temperature.errors?.['min']"
+              >Value must be ≥ 90°F</span
+            >
+            <span *ngIf="temperature.errors?.['max']"
+              >Value must be ≤ 110°F</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="allfildes-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Height (Cm)</mat-label>
+          <input
+            matInput
+            type="number"
+            name="heightCm"
+            [(ngModel)]="vitalsData.heightCm"
+            #heightCm="ngModel"
+            min="50"
+            max="250"
+            (input)="calculateBMI()"
+          />
+
+          <mat-error *ngIf="heightCm.hasError('min')" class="error-message">
+            Height must be at least 50 cm
+          </mat-error>
+
+          <mat-error *ngIf="heightCm.hasError('max')" class="error-message">
+            Height cannot exceed 250 cm
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+  <mat-label>Respiratory Rate</mat-label>
+  <input
+    matInput
+    type="number"
+    name="respiration"
+    [(ngModel)]="vitalsData.respiration"
+    #respCtrl="ngModel"
+    min="10"
+    max="40"
+  />
+  <mat-error *ngIf="respCtrl.hasError('min')">
+    Value must be ≥ 10
+  </mat-error>
+  <mat-error *ngIf="respCtrl.hasError('max')">
+    Value must be ≤ 40
+  </mat-error>
+</mat-form-field>
+
+        <!-- <mat-form-field appearance="outline"
+          ><mat-label>DBP</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="vitalsData.diastolicBP"
+            (ngModelChange)="calculateMBP()"
+            name="diastolicBP"
+          />
+        </mat-form-field> -->
+        <mat-form-field appearance="outline">
+  <mat-label>DBP</mat-label>
+  <input
+    matInput
+    type="number"
+    [(ngModel)]="vitalsData.diastolicBP"
+    (ngModelChange)="calculateMBP()"
+    name="diastolicBP"
+    #dbp="ngModel"
+    required
+    min="0"
+    max="130"
+  />
+
+  <!-- Minimum Value Validation -->
+  <mat-error *ngIf="dbp.hasError('min')">
+    DBP must be at least 40
+  </mat-error>
+
+  <!-- Maximum Value Validation -->
+  <mat-error *ngIf="dbp.hasError('max')">
+    DBP cannot be more than 130
+  </mat-error>
+</mat-form-field>
+
+
+        <mat-form-field appearance="outline"
+          ><mat-label>RBS</mat-label
+          ><input matInput type="number" [(ngModel)]="vitalsData.rbs"
+        /></mat-form-field>
+      </div>
+      <div class="allfildes-container">
+        <mat-form-field appearance="outline"
+          ><mat-label>BMI</mat-label
+          ><input matInput type="number" [(ngModel)]="vitalsData.bmi" readonly
+        /></mat-form-field>
+        <mat-form-field appearance="outline"
+          ><mat-label>Spo2</mat-label
+          ><input matInput type="number" [(ngModel)]="vitalsData.spo2"
+        /></mat-form-field>
+        <mat-form-field appearance="outline"
+          ><mat-label>MBP</mat-label>
+          <input
+            matInput
+            [(ngModel)]="vitalsData.meanBloodPressure"
+            name="meanBloodPressure"
+            readonly
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+          ><mat-label>Allergies</mat-label
+          ><input matInput type="text" [(ngModel)]="vitalsData.allergies"
+        /></mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+  <div class="save-button">
+    <button mat-raised-button color="primary" (click)="saveVitals()">
+      💾 Save Vitals
+    </button>
+  </div>
+</section>
+
+<!-- Vitals Saved Records -->
+<section *ngIf="vitalsRecords.length > 0">
+  <h3 class="sub-heading">Saved Vitals</h3>
+  <div *ngFor="let v of vitalsRecords" class="lft-card">
+    <div class="entry-header">
+      <div><strong>Nurse:</strong> {{ v?.submittedBy }}</div>
+      <div><strong>Designation:</strong> {{ v?.designation }}</div>
+      <div><strong>Date:</strong> {{ v.createdAt | date : "dd-MM-yyyy" }}</div>
+      <div><strong>Time:</strong> {{ v.createdAt | date : "shortTime" }}</div>
+      <mat-slide-toggle
+        [(ngModel)]="v.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      ></mat-slide-toggle>
+    </div>
+
+    <div class="cbc-grid" *ngIf="v.showDetails">
+      <div class="vitals-container">
+        <div class="cbc-item" *ngIf="v.weight">
+          <strong>Weight:</strong> {{ v.weight }}
+        </div>
+        <div class="cbc-item" *ngIf="v.height">
+          <strong>Height:</strong> {{ v.height }}
+        </div>
+        <div class="cbc-item" *ngIf="v.bmi">
+          <strong>BMI:</strong> {{ v.bmi }}
+        </div>
+      </div>
+      <div class="vitals-container">
+        <div class="cbc-item" *ngIf="v.pulseRate">
+          <strong>Pulse Rate:</strong> {{ v.pulseRate }}
+        </div>
+
+        <div class="cbc-item" *ngIf="v.respiration">
+          <strong>Respiration:</strong> {{ v.respiration }}
+        </div>
+        <div class="cbc-item" *ngIf="v.spo2">
+          <strong>Spo2:</strong> {{ v.spo2 }}
+        </div>
+      </div>
+      <div class="vitals-container">
+        <div class="cbc-item" *ngIf="v.systolicBp">
+          <strong>SBP:</strong> {{ v.systolicBp }}
+        </div>
+        <div class="cbc-item" *ngIf="v.diastolicBp">
+          <strong>DBP:</strong> {{ v.diastolicBp }}
+        </div>
+        <div class="cbc-item" *ngIf="v.meanBp">
+          <strong>MBP:</strong> {{ v.meanBp }}
+        </div>
+      </div>
+      <div class="vitals-container">
+        <div class="cbc-item" *ngIf="v.temperature">
+          <strong>Temperature:</strong> {{ v.temperature }}
+        </div>
+        <div class="cbc-item" *ngIf="v.rbs">
+          <strong>RBS:</strong> {{ v.rbs }}
+        </div>
+        <div class="cbc-item" *ngIf="v.allergies">
+          <strong>Allergies:</strong> {{ v.allergies }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

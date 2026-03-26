@@ -1,0 +1,146 @@
+<section class="section" *ngIf="patient">
+  <h3 class="sub-heading">Patient Details</h3>
+  <div class="grid-3">
+    <div><strong>Name:</strong> {{ patient?.name }}</div>
+    <div><strong>Guardian Name:</strong> {{ patient?.guardianName }}</div>
+    <div><strong>Age:</strong> {{ patient?.age }}</div>
+    <div><strong>Gender:</strong> {{ patient?.gender }}</div>
+    <div><strong>CR Number:</strong> {{ patient?.crNumber }}</div>
+  </div>
+</section>
+<section class="section" *ngIf="treatments.length > 0">
+  <h3 class="sub-heading">📋 Treatment History</h3>
+
+  <div *ngFor="let t of treatments" class="treatment-card">
+    <!-- Header -->
+    <div class="entry-header">
+      <div class="treatment-section">
+        <div><strong>Doctor:</strong> {{ t?.submitted_by }}</div>
+        <div><strong>Designation:</strong> {{ t?.designation }}</div>
+        <div>
+          <strong>Date:</strong> {{ t?.createdAt | date : "dd-MM-yyyy" }}
+        </div>
+        <div>
+          <strong>🕒 Time:</strong> {{ t?.createdAt | date : "shortTime" }}
+        </div>
+
+        <mat-checkbox
+          [(ngModel)]="t.isChecked"
+          class="status-checkbox"
+          [ngClass]="t.isChecked ? 'green-check' : 'red-check'"
+        >
+        </mat-checkbox>
+
+        <mat-slide-toggle
+          [(ngModel)]="t.showDetails"
+          color="primary"
+          class="custom-slide-toggle"
+        >
+        </mat-slide-toggle>
+      </div>
+    </div>
+
+    <div class="treatment-content">
+      <!-- Doctor Prescription Data -->
+      <div *ngIf="t.showDetails">
+        <h4 class="sub-heading nursing-entry-heading">
+          💊 Doctor Prescription
+        </h4>
+        <div class="treatment-values">
+          <div class="grid-2">
+            <strong>Drug Name:</strong> {{ t.drugName || "—" }}
+          </div>
+          <div class="grid-2"><strong>Dose:</strong> {{ t.dose || "—" }}</div>
+          <div class="grid-2">
+            <strong>Frequency:</strong> {{ t.frequency || "—" }}
+          </div>
+          <div class="grid-2"><strong>Route:</strong> {{ t.route || "—" }}</div>
+        </div>
+      </div>
+
+      <!-- Nursing Input (for new entry) -->
+      <div class="nursing-entry" *ngIf="t.showDetails">
+        <h4 class="sub-heading nursing-entry-heading" style="margin-top: 15px">
+          👩‍⚕️ Nursing Entry
+        </h4>
+        <div class="treatment-values">
+          <mat-form-field appearance="outline" class="given-time-field">
+            <mat-label>Given Time</mat-label>
+            <input matInput type="time" [(ngModel)]="t.dosageTime" />
+          </mat-form-field>
+
+          <!-- Next Dose -->
+          <mat-form-field appearance="outline" class="next-dose-field">
+            <mat-label>Next Dose</mat-label>
+            <mat-select [(ngModel)]="t.nextDose">
+              <mat-option value="N/A">N/A</mat-option>
+              <mat-option *ngIf="!t.firstDoseGiven" value="First Dose">
+                First Dose
+              </mat-option>
+              <mat-option value="6h">After 6 Hours</mat-option>
+              <mat-option value="8h">After 8 Hours</mat-option>
+              <mat-option value="12h">After 12 Hours</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Save Button -->
+          <div>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="saveTreatmentStatus(t)"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nursing History -->
+      <div
+        *ngIf="t.history?.length > 0 && t.showDetails"
+        class="treatment-history"
+      >
+        <h4 class="sub-heading nursing-entry-heading">
+          📜 Nursing Dose History
+        </h4>
+        <div *ngFor="let h of t.history" class="treatment-values">
+          <div class="grid-2"><strong>Next Dose:</strong> {{ h.nextDose }}</div>
+          <div class="grid-2">
+            <strong>Dosage Time:</strong> {{ h.dosageTime }}
+          </div>
+          <div class="grid-2">
+            <strong>Given By:</strong> {{ h.submitted_by }}
+          </div>
+          <div class="grid-2">
+            <strong>Date:</strong> {{ h.createdAt | date : "dd-MM-yyyy HH:mm" }}
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let h of t.history">
+        <div class="nextDoseTime-allert">
+          <!-- First Dose -->
+          <span *ngIf="h.nextDose === 'First Dose'" class="done">
+            ✔ First Dose Completed at {{ h.dosageTime }}
+          </span>
+
+          <!-- Other doses -->
+          <label *ngIf="h.nextDose !== 'First Dose'">
+            <input
+              type="checkbox"
+              [(ngModel)]="h.isChecked"
+              (change)="toggleCompletion(h)"
+            />
+            <span [class.blink]="h.drugTime && !h.isChecked">
+              Next Dose at {{ h.nextDoseTime | date : "shortTime" }}
+            </span>
+          </label>
+
+          <span *ngIf="h.isChecked && h.nextDose !== 'First Dose'" class="done">
+            ✔ Completed
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

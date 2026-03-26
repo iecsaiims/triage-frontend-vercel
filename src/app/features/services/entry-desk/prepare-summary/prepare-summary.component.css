@@ -1,0 +1,31 @@
+.dashboard-layout{
+margin: 10px;
+}
+.patient-info-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.triage-history{
+    margin-top: 10px;
+}
+
+.triage-red {
+  color: red;
+  font-weight: bold;
+}
+
+.triage-yellow {
+  color: goldenrod;;
+  font-weight: bold;
+}
+
+.triage-green {
+  color: green;
+  font-weight: bold;
+}
+
+.triage-black {
+  color: black;
+  font-weight: bold;
+}

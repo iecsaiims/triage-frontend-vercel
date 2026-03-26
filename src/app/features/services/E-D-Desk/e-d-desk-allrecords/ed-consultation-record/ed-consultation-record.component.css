@@ -1,0 +1,136 @@
+.section {
+  padding: 24px;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  margin: 20px auto;
+  max-width: 1000px;
+}
+
+.sub-heading {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #2c3e50;
+  text-align: center;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.disposition-box,
+.upload-box {
+  margin-top: 20px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.disposition-box h4,
+.upload-box h4 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #34495e;
+  font-weight: 500;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.button-container button {
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.lft-card {
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #ddd;
+}
+.lft-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 10px;
+}
+::ng-deep .custom-slide-toggle {
+  transform: scale(0.8);
+}
+::ng-deep .custom-slide-toggle .mdc-switch__track::after {
+  background: #1976d2 !important;
+}
+::ng-deep .mdc-switch--selected .mdc-switch__icon {
+  fill: #1976d2 !important;
+}
+.cbc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.cbc-item {
+  background: #fdfdfd;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.cbc-item h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1976d2;
+}
+.cbc-item p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #555;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.date-time-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.upload-box {
+  margin-top: 20px;
+  padding: 12px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+}

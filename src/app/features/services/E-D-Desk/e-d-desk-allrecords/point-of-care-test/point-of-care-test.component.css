@@ -1,0 +1,126 @@
+.section {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.sub-heading {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.grid-1, .grid-2, .grid-3 {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  align-items: center;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.upload-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.image-preview img {
+  margin-top: 10px;
+  max-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.activeSection{
+  margin-top: 10px;
+  display: grid;
+}
+.allSaveButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+::ng-deep .custom-slide-toggle {
+  transform: scale(0.7);
+}
+
+::ng-deep .custom-slide-toggle .mdc-switch__track::after {
+  background: #cfa359 !important;
+}
+
+::ng-deep .mdc-switch--selected .mdc-switch__icon {
+  fill: #cfa359 !important;
+}
+
+.ecg-thumbnail {
+  max-height: 200px;
+  cursor: zoom-in;
+  transition: transform 0.2s ease-in-out;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ecg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.ecg-fullscreen-img {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+.image-wrapper img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-wrapper:hover img {
+  transform: scale(1.2);
+  z-index: 10;
+  position: relative;
+}
+.Allergy-form{
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.Allergy-fields{
+  width: 30%;
+}
+.snackbar-success {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.snackbar-error {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}

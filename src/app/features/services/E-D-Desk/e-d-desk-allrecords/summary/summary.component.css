@@ -1,0 +1,274 @@
+.summary-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.controls-section {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.controls-section h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 2em;
+}
+
+.controls-section p {
+  color: #6c757d;
+  font-size: 1.1em;
+  margin-bottom: 30px;
+}
+
+.preview-section {
+  width: 100%;
+}
+
+.preview-controls {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.info-text {
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #2196f3;
+}
+
+.info-text p {
+  margin: 0;
+  color: #1565c0;
+  font-size: 0.95em;
+}
+
+.report-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.report-content {
+  padding: 0;
+  min-height: 600px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6c757d, #545b62);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #545b62, #383d41);
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: white;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #1e7e34, #155724);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  font-size: 1.2em;
+}
+
+::ng-deep .report-content {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+::ng-deep .section {
+  margin-bottom: 25px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  background: #ffffff;
+  position: relative;
+}
+
+::ng-deep .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+::ng-deep .section-checkbox {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 8px 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+}
+
+::ng-deep .section-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+::ng-deep .section-checkbox label {
+  cursor: pointer;
+  user-select: none;
+}
+
+::ng-deep .section-content.strikethrough {
+  position: relative;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+::ng-deep .section-content.strikethrough::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    rgba(220, 53, 69, 0.3) 8px,
+    rgba(220, 53, 69, 0.3) 16px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+::ng-deep .section-content.strikethrough * {
+  text-decoration: line-through;
+}
+
+::ng-deep .section-content.strikethrough img {
+  filter: grayscale(100%) blur(1px);
+}
+
+::ng-deep .control-buttons {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 25px;
+  border: 1px solid #dee2e6;
+}
+
+::ng-deep .control-buttons button {
+  margin: 5px 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+ 
+  .summary-container {
+    padding: 0;
+    max-width: none;
+    background: white;
+  }
+ 
+  .report-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+ 
+  .report-content {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .controls-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+ 
+  .controls-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+ 
+  ::ng-deep .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+ 
+  ::ng-deep .section-checkbox {
+    align-self: flex-end;
+  }
+}
+.summary-btn{
+      display: flex;
+    justify-content: center;
+    align-items: center;
+}

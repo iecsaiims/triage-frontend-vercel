@@ -1,0 +1,165 @@
+<main class="page" [class.is-loading]="loading()">
+  <section class="panel hero">
+    <div class="hero__text">
+      <div class="crumbs">
+        <span class="crumb">Home</span>
+        <span class="crumb muted">/</span>
+        <span class="crumb">Dashboard</span>
+      </div>
+      <h1>Live Patient Dashboard</h1>
+      <p class="lede">
+        Snapshot of current load and dispositions. Data refreshes every 30 seconds.
+      </p>
+      <div class="hero__actions">
+        <button type="button" class="btn ghost" (click)="refreshNow()" [disabled]="loading()">
+          <span class="icon">&#8635;</span>
+          <span>{{ loading() ? 'Refreshing...' : 'Refresh now' }}</span>
+        </button>
+        <span class="pill" *ngIf="lastUpdated()">
+          Updated {{ lastUpdated() | date: 'shortTime' }}
+        </span>
+        <span class="pill muted-pill" *ngIf="!lastUpdated()">Awaiting first sync</span>
+      </div>
+      <p class="error" *ngIf="error()">{{ error() }}</p>
+    </div>
+    <div class="hero__badge">
+      <div class="badge-card">
+        <p class="eyebrow">Today</p>
+        <div class="badge-value">{{ dashboard()?.totals?.patients?.today ?? '-' }}</div>
+        <div class="badge-sub">New registrations</div>
+        <div class="badge-foot">
+          Total: <strong>{{ dashboard()?.totals?.patients?.allTime ?? '-' }}</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid stats">
+    <article class="panel stat">
+      <p class="stat__label">Active patients</p>
+      <div class="stat__value">{{ dashboard()?.totals?.activePatients?.allTime ?? '-' }}</div>
+      <p class="stat__meta">
+        Today: <strong>{{ dashboard()?.totals?.activePatients?.today ?? '-' }}</strong>
+      </p>
+    </article>
+
+    <article class="panel stat">
+      <p class="stat__label">Registered patients</p>
+      <div class="stat__value">{{ dashboard()?.totals?.patients?.allTime ?? '-' }}</div>
+      <p class="stat__meta">Today: <strong>{{ dashboard()?.totals?.patients?.today ?? '-' }}</strong></p>
+    </article>
+
+    <article class="panel stat accent">
+      <p class="stat__label">Workbook export</p>
+      <div class="stat__value small">Excel</div>
+      <p class="stat__meta">Download latest patient + triage data</p>
+      <button type="button" class="btn inline" (click)="download()" [disabled]="isDownloading()">
+        {{ isDownloading() ? 'Preparing...' : 'Download' }}
+      </button>
+    </article>
+  </section>
+
+  <section class="grid twin">
+    <article class="panel chart">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">Triage mix</p>
+          <h2>Latest triage per patient</h2>
+        </div>
+        <span class="pill soft">Live</span>
+      </div>
+
+      <div class="bars">
+        <div class="bar-row" *ngFor="let item of triageAllTime() | keyvalue : sortDescending">
+          <span class="bar-name">{{ item.key }}</span>
+          <div class="bar-track">
+            <div
+              class="bar-fill"
+              [style.width.%]="percent(toNumber(item.value), triageTotalAllTime())"
+              [style.minWidth.%]="toNumber(item.value) ? 6 : 0"
+              [attr.data-count]="toNumber(item.value)"
+            ></div>
+          </div>
+          <span class="bar-count">{{ toNumber(item.value) }}</span>
+        </div>
+        <p class="empty" *ngIf="!triageTotalAllTime()">No triage data yet</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip">Today <strong>{{ triageTotalToday() }}</strong></span>
+        <span class="chip">All time <strong>{{ triageTotalAllTime() }}</strong></span>
+      </div>
+    </article>
+
+    <article class="panel chart">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">Disposition</p>
+          <h2>Latest disposition per patient</h2>
+        </div>
+        <span class="pill soft">Summary</span>
+      </div>
+
+      <div class="bars">
+        <div class="bar-row" *ngFor="let item of dispositionAllTime() | keyvalue : sortDescending">
+          <span class="bar-name">{{ item.key }}</span>
+          <div class="bar-track gold">
+            <div
+              class="bar-fill"
+              [style.width.%]="percent(toNumber(item.value), dispositionTotalAllTime())"
+              [style.minWidth.%]="toNumber(item.value) ? 6 : 0"
+              [attr.data-count]="toNumber(item.value)"
+            ></div>
+          </div>
+          <span class="bar-count">{{ toNumber(item.value) }}</span>
+        </div>
+        <p class="empty" *ngIf="(dispositionAllTime() | keyvalue).length === 0">
+          No disposition data yet
+        </p>
+      </div>
+
+      <div class="chips">
+        <span class="chip">Today <strong>{{ dispositionTotalToday() }}</strong></span>
+        <span class="chip">All time <strong>{{ dispositionTotalAllTime() }}</strong></span>
+      </div>
+    </article>
+  </section>
+
+  <section class="panel list">
+    <div class="card-head">
+      <div>
+        <p class="eyebrow">Active queue</p>
+        <h2>Patients with no disposition</h2>
+        <p class="muted">Showing up to 50 newest triage times.</p>
+      </div>
+      <span class="pill">Count: {{ dashboard()?.activePatients?.count ?? '-' }}</span>
+    </div>
+
+    <div class="table" *ngIf="activeList().length; else emptyState">
+      <div class="row head">
+        <span>Patient</span>
+        <span>Triage</span>
+        <span>Emergency type</span>
+        <span>Last triage</span>
+      </div>
+
+      <div class="row" *ngFor="let patient of activeList()">
+        <div class="cell">
+          <div class="title">{{ patient.name }}</div>
+          <div class="muted">CR {{ patient.crNumber }}</div>
+        </div>
+        <div class="cell">
+          <span class="badge" [attr.data-triage]="patient.triage || 'NA'">
+            {{ patient.triage || 'NA' }}
+          </span>
+        </div>
+        <div class="cell">{{ patient.emergencyType || '-' }}</div>
+        <div class="cell">{{ formatDate(patient.triageTime) }}</div>
+      </div>
+    </div>
+
+    <ng-template #emptyState>
+      <p class="empty">No active patients right now.</p>
+    </ng-template>
+  </section>
+</main>

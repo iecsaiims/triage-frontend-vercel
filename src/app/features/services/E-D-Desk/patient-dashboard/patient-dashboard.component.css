@@ -1,0 +1,88 @@
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #ffffff;
+  padding: 24px;
+  scroll-behavior: smooth;
+  max-height: 100vh;
+}
+
+.dashboard-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dashboard-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.patient-card,
+.triage-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+}
+
+.patient-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.patient-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.patient-info p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.triage-table-wrapper {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.triage-red {
+  color: red;
+  font-weight: bold;
+}
+
+.triage-yellow {
+  color: goldenrod;;
+  font-weight: bold;
+}
+
+.triage-green {
+  color: green;
+  font-weight: bold;
+}
+
+.triage-black {
+  color: black;
+  font-weight: bold;
+}

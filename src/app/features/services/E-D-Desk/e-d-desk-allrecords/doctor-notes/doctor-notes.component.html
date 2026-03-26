@@ -1,0 +1,798 @@
+<!-- Patient Details -->
+<section class="section">
+  <h3 class="sub-heading">Patient Details</h3>
+  <div class="grid-3">
+    <div><strong>Name:</strong> {{ patient?.name }}</div>
+    <div><strong>Guardian Name:</strong> {{ patient?.guardianName }}</div>
+    <div><strong>Age:</strong> {{ patient?.age }}</div>
+    <div><strong>Gender:</strong> {{ patient?.gender }}</div>
+    <div><strong>CR Number:</strong> {{ patient?.crNumber }}</div>
+    <div><strong>Department:</strong> {{ patient?.department }}</div>
+  </div>
+</section>
+<!-- Select Template -->
+<section class="section selectedTemplate">
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Select Template</mat-label>
+    <mat-select [(ngModel)]="selectedTemplate">
+      <mat-option [value]="''">Select</mat-option>
+      <mat-option value="emergency">Emergency Case Template</mat-option>
+      <mat-option value="progress">Progress Note</mat-option>
+      <mat-option value="trauma">Trauma Template</mat-option>
+    </mat-select>
+  </mat-form-field>
+</section>
+
+<!-- Emergency Case Template -->
+<section class="section" *ngIf="selectedTemplate === 'emergency'">
+  <div class="grid-3 toggle-header">
+    <h3 class="sub-heading">Emergency Case Template</h3>
+  </div>
+
+  <!-- Conditional Display -->
+  <div class="Conditional-Display">
+    <mat-form-field appearance="outline">
+      <mat-label>Chief Complains</mat-label>
+      <textarea matInput type="text" [(ngModel)]="chief_complains"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>History of Present Illness</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="history_of_present_illness"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Review of Symptoms</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="review_of_symptoms"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Progression of Symptoms</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="progression_of_symptoms"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Why Today</mat-label>
+      <textarea matInput type="text" [(ngModel)]="why_today"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>General Physical Examination</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="general_physical_examination"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Systemic Examination</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="systemic_examination"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Relevant Investigation Findings</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="relevant_investigation_findings"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Provisional Dx Differentials</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="provisional_dx_differentials"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Further Management Plan</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="emergency_further_management_plan"
+      ></textarea>
+    </mat-form-field>
+  </div>
+</section>
+
+<!-- Progress Note -->
+<section class="section" *ngIf="selectedTemplate === 'progress'">
+  <h3 class="sub-heading">Progress Note</h3>
+
+  <!-- General Info -->
+  <div class="Conditional-Display">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Provisional Diagnosis</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="provisional_diagnosis"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Current Condition of the Patient</mat-label>
+      <textarea matInput type="text" [(ngModel)]="current_condition"></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Vitals Section -->
+  <div style="margin-top: 1rem">
+    <h4 class="sub-heading">Vitals</h4>
+    <div class="grid-vitals">
+      <div class="vitals-column">
+        <!-- Pulse Field -->
+        <mat-form-field appearance="outline" class="vital-field">
+          <mat-label>Pulse (/min)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="pulse"
+            name="pulse"
+            required
+            min="0"
+            max="300"
+            #pulseCtrl="ngModel"
+          />
+
+          <mat-error *ngIf="pulseCtrl.hasError('min')">
+            Pulse must be at least 0
+          </mat-error>
+          <mat-error *ngIf="pulseCtrl.hasError('max')">
+            Pulse cannot be more than 300
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Blood Pressure Field -->
+        <mat-form-field appearance="outline" class="vital-field">
+          <mat-label>Blood Pressure (mmHg)</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="blood_pressure"
+            name="bp"
+            required
+            pattern="^\d{2,3}\/\d{2,3}$"
+            #bpCtrl="ngModel"
+          />
+          <mat-error *ngIf="bpCtrl.hasError('pattern')">
+            Enter valid BP (e.g. 120/80)
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="vitals-column">
+        <!-- RR -->
+        <mat-form-field appearance="outline" class="vital-field">
+          <mat-label>RR(/min)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="rr"
+            name="rr"
+            required
+            min="0"
+            max="80"
+            #rrCtrl="ngModel"
+          />
+          <mat-error *ngIf="rrCtrl.hasError('min') || rrCtrl.hasError('max')">
+            RR must be between 0 and 80
+          </mat-error>
+        </mat-form-field>
+
+        <!-- SpO₂ -->
+        <mat-form-field appearance="outline" class="vital-field">
+          <mat-label>SpO₂(%)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="spo2"
+            name="spo2"
+            required
+            min="0"
+            max="100"
+            #spo2Ctrl="ngModel"
+          />
+          <mat-error
+            *ngIf="spo2Ctrl.hasError('min') || spo2Ctrl.hasError('max')"
+          >
+            SpO₂ must be between 0 and 100
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="vitals-column">
+        <mat-form-field appearance="outline" class="vital-field">
+          <mat-label>GCS (EVM)</mat-label>
+          <input matInput type="number" [(ngModel)]="gcs" min="0" max="15" />
+          <mat-error *ngIf="gcs != null && (gcs < 3 || gcs > 15)">
+            Value must be between 3 and 15
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="vital-field">
+          <mat-label>Pain Score</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="pain_score"
+            min="0"
+            max="10"
+          />
+          <mat-error
+            *ngIf="pain_score != null && (pain_score < 1 || pain_score > 10)"
+          >
+            Value must be between 1 and 10
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- Relevant Reports Section -->
+  <div style="margin-top: 1.5rem">
+    <h4 class="sub-heading">Relevant Reports of Investigation</h4>
+    <div class="Conditional-Display">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Blood Test</mat-label>
+        <textarea matInput type="text" [(ngModel)]="blood_test"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Imaging</mat-label>
+        <textarea matInput type="text" [(ngModel)]="imaging"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field full-width">
+        <mat-label>Further Management Plan</mat-label>
+        <textarea
+          matInput
+          type="text"
+          [(ngModel)]="progress_further_management_plan"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</section>
+
+<!-- trauma section -->
+<section class="section" *ngIf="selectedTemplate === 'trauma'">
+  <h3 class="sub-heading">Trauma Template</h3>
+
+  <!-- A/H/O -->
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>A/H/O</mat-label>
+    <mat-select [(ngModel)]="aho" name="aho">
+      <mat-option value="Road traffic accident"
+        >Road traffic accident</mat-option
+      >
+      <mat-option value="Assault">Assault</mat-option>
+      <mat-option value="Fall">Fall</mat-option>
+      <mat-option value="Others">Others</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- If 'Others' is selected -->
+  <div class="grid-2" *ngIf="aho === 'Others'">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Place of Event</mat-label>
+      <textarea
+        matInput
+        type="text"
+        [(ngModel)]="place_of_event"
+        name="place_of_event"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Date of Injury</mat-label>
+      <input
+        matInput
+        [matDatepicker]="injuryDate"
+        [(ngModel)]="date_of_injury"
+        name="date_of_injury"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="injuryDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #injuryDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Time of Injury</mat-label>
+      <input
+        matInput
+        type="time"
+        [(ngModel)]="time_of_injury"
+        name="time_of_injury"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Mechanism of Injury</mat-label>
+    <textarea
+      matInput
+      type="text"
+      [(ngModel)]="mechanism_of_injury"
+      name="mechanism_of_injury"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>MLC No.</mat-label>
+    <textarea matInput type="text" [(ngModel)]="mlc_no" name="mlc_no" ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Presenting Complaints</mat-label>
+    <textarea
+      matInput
+      type="text"
+      [(ngModel)]="presenting_complaints"
+      name="presenting_complaints"
+    ></textarea>
+  </mat-form-field>
+
+  <!-- Yes/No Radios -->
+  <div class="grid-3">
+    <div class="yes-no-field">
+      <label>H/O Loss of Consciousness:</label>
+      <mat-radio-group
+        [(ngModel)]="loss_of_consciousness"
+        name="loss_of_consciousness"
+      >
+        <mat-radio-button value="Yes">Yes</mat-radio-button>
+        <mat-radio-button value="No">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="yes-no-field">
+      <label>ENT Bleed:</label>
+      <mat-radio-group [(ngModel)]="ent_bleed" name="ent_bleed">
+        <mat-radio-button value="Yes">Yes</mat-radio-button>
+        <mat-radio-button value="No">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="yes-no-field">
+      <label>Amnesia:</label>
+      <mat-radio-group [(ngModel)]="amnesia" name="amnesia">
+        <mat-radio-button value="Yes">Yes</mat-radio-button>
+        <mat-radio-button value="No">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="yes-no-field">
+      <label>Seizures:</label>
+      <mat-radio-group [(ngModel)]="seizures" name="seizures">
+        <mat-radio-button value="Yes">Yes</mat-radio-button>
+        <mat-radio-button value="No">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="yes-no-field">
+      <label>Vomiting:</label>
+      <mat-radio-group [(ngModel)]="vomiting" name="vomiting">
+        <mat-radio-button value="Yes">Yes</mat-radio-button>
+        <mat-radio-button value="No">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Injury Identified: Head to Toe</mat-label>
+    <textarea
+      matInput
+      type="text"
+      [(ngModel)]="injury_identified"
+      name="injury_identified"
+    ></textarea>
+  </mat-form-field>
+<mat-form-field appearance="outline" class="form-field">
+  <mat-label>History of Allergy</mat-label>
+  <mat-select [(ngModel)]="hasAllergy" name="hasAllergy">
+    <mat-option value="Yes">Yes</mat-option>
+    <mat-option value="No">No</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field *ngIf="hasAllergy === 'Yes'" appearance="outline" class="form-field">
+  <mat-label>Allergy Details</mat-label>
+  <textarea
+    matInput
+    [(ngModel)]="allergy_history"
+    name="allergy_history"
+    placeholder="Enter allergy details"
+  ></textarea>
+</mat-form-field>
+
+
+ <!-- Medication History Select -->
+<mat-form-field appearance="outline" class="form-field">
+  <mat-label>Medication History</mat-label>
+  <mat-select [(ngModel)]="hasMedicationHistory" name="hasMedicationHistory">
+    <mat-option value="Yes">Yes</mat-option>
+    <mat-option value="No">No</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field *ngIf="hasMedicationHistory === 'Yes'" appearance="outline" class="form-field">
+  <mat-label>Medication Details</mat-label>
+  <textarea
+    matInput
+    [(ngModel)]="medication_history"
+    name="medication_history"
+    placeholder="Enter medication history"
+  ></textarea>
+</mat-form-field>
+
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Past History / Comorbidity</mat-label>
+    <textarea
+      matInput
+      type="text"
+      [(ngModel)]="past_history"
+      name="past_history"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>If Female: LMP</mat-label>
+    <textarea matInput type="text" [(ngModel)]="lmp" name="lmp" ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>UPT</mat-label>
+    <mat-select [(ngModel)]="upt" name="upt">
+      <mat-option value="Positive">Positive</mat-option>
+      <mat-option value="Negative">Negative</mat-option>
+      <mat-option value="Not Done">Not Done</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Last Meal</mat-label>
+    <textarea matInput type="text" [(ngModel)]="last_meal" name="last_meal" ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Any treatment received before coming to AIIMS</mat-label>
+    <textarea
+      matInput
+      type="text"
+      [(ngModel)]="prior_treatment"
+      name="prior_treatment"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field
+    appearance="outline"
+    class="form-field"
+    style="margin-top: 1rem"
+  >
+    <mat-label>Treatment Plan</mat-label>
+    <textarea
+      matInput
+      rows="3"
+      [(ngModel)]="treatment_plan"
+      name="treatment_plan"
+    ></textarea>
+  </mat-form-field>
+</section>
+
+<!-- multipal button -->
+<section class="section" *ngIf="selectedTemplate">
+  <div class="button-groupallbtn">
+    <!-- Emergency Note -->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSaveEmergency()"
+      *ngIf="selectedTemplate === 'emergency'"
+    >
+      Save
+    </button>
+    <!-- Progress Note -->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSaveProgressNote()"
+      *ngIf="selectedTemplate === 'progress'"
+    >
+      Save
+    </button>
+    <!-- Trauma Note -->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSaveTraumaNote()"
+      *ngIf="selectedTemplate === 'trauma'"
+    >
+      Save
+    </button>
+    <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="accent" (click)="onReset()">Clear</button>
+  </div>
+</section>
+
+<!-- Emergency Case Details -->
+<section class="section" *ngIf="emergencyNotes.length > 0">
+  <h3 class="sub-heading">Emergency Case Details</h3>
+
+  <div *ngFor="let note of emergencyNotes" class="doctor-entry">
+    <div class="grid-3 user-header">
+      <div *ngIf="note?.submittedBy">
+        <strong>Doctor Name:</strong> {{ note?.submittedBy }}
+      </div>
+      <div *ngIf="note?.designation">
+        <strong>Designation:</strong> {{ note?.designation }}
+      </div>
+      <div>
+        <strong *ngIf="note?.createdAt">Date:</strong>
+        {{ note?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div *ngIf="note?.createdAt">
+        <strong>Time:</strong> {{ note?.createdAt | date : "shortTime" }}
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="note.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+
+    <table class="mat-elevation-z2 full-width-table" *ngIf="note.showDetails">
+      <tr *ngIf="note?.chief_complains">
+        <th>Chief Complains</th>
+        <td>{{ note?.chief_complains }}</td>
+      </tr>
+      <tr *ngIf="note?.history_of_present_illness">
+        <th>History of Present Illness</th>
+        <td>{{ note?.history_of_present_illness }}</td>
+      </tr>
+      <tr *ngIf="note?.review_of_symptoms">
+        <th>Review of Symptoms</th>
+        <td>{{ note?.review_of_symptoms }}</td>
+      </tr>
+      <tr *ngIf="note?.progression_of_symptoms">
+        <th>Progression of Symptoms</th>
+        <td>{{ note?.progression_of_symptoms }}</td>
+      </tr>
+      <tr *ngIf="note?.why_today">
+        <th>Why Today</th>
+        <td>{{ note?.why_today }}</td>
+      </tr>
+      <tr *ngIf="note?.general_physical_examination">
+        <th>General Physical Examination</th>
+        <td>{{ note?.general_physical_examination }}</td>
+      </tr>
+      <tr *ngIf="note?.systemic_examination">
+        <th>Systemic Examination</th>
+        <td>{{ note?.systemic_examination }}</td>
+      </tr>
+      <tr *ngIf="note?.relevant_investigation_findings">
+        <th>Relevant Investigation Findings</th>
+        <td>{{ note?.relevant_investigation_findings }}</td>
+      </tr>
+      <tr *ngIf="note?.provisional_dx_differentials">
+        <th>Provisional Dx Differentials</th>
+        <td>{{ note?.provisional_dx_differentials }}</td>
+      </tr>
+      <tr *ngIf="note?.emergency_further_management_plan">
+        <th>Further Management Plan</th>
+        <td>{{ note?.emergency_further_management_plan }}</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- Progress Note Details Section -->
+<section class="section" *ngIf="progressNotes.length > 0">
+  <h3 class="sub-heading">Progress Note Details</h3>
+
+  <div *ngFor="let note of progressNotes" class="doctor-entry">
+    <div class="grid-3 user-header">
+      <div *ngIf="note?.submittedBy">
+        <strong>Doctor Name:</strong> {{ note?.submittedBy }}
+      </div>
+      <div *ngIf="note?.designation">
+        <strong>Designation:</strong> {{ note?.designation }}
+      </div>
+      <div *ngIf="note?.createdAt">
+        <strong>Date:</strong> {{ note.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div *ngIf="note?.createdAt">
+        <strong>Time:</strong> {{ note.createdAt | date : "shortTime" }}
+      </div>
+
+      <mat-slide-toggle
+        [(ngModel)]="note.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+
+    <table class="mat-elevation-z2 full-width-table" *ngIf="note.showDetails">
+      <tr *ngIf="note?.provisional_diagnosis">
+        <th>Provisional Diagnosis</th>
+        <td>{{ note?.provisional_diagnosis }}</td>
+      </tr>
+      <tr *ngIf="note?.current_condition">
+        <th>Current Condition</th>
+        <td>{{ note?.current_condition }}</td>
+      </tr>
+      <tr *ngIf="note?.pulse">
+        <th>Pulse (/min)</th>
+        <td>{{ note?.pulse }}</td>
+      </tr>
+      <tr *ngIf="note?.blood_pressure">
+        <th>Blood Pressure (mmHg)</th>
+        <td>{{ note?.blood_pressure }}</td>
+      </tr>
+      <tr *ngIf="note?.rr">
+        <th>RR (/min)</th>
+        <td>{{ note?.rr }}</td>
+      </tr>
+      <tr *ngIf="note?.spo2">
+        <th>SpO₂ (%)</th>
+        <td>{{ note?.spo2 }}</td>
+      </tr>
+      <tr *ngIf="note?.pain_score">
+        <th>Pain Score</th>
+        <td>{{ note?.pain_score }}</td>
+      </tr>
+      <tr *ngIf="note?.gcs">
+        <th>GCS (EVM)</th>
+        <td>{{ note?.gcs }}</td>
+      </tr>
+      <tr *ngIf="note?.blood_test">
+        <th>Blood Test</th>
+        <td>{{ note?.blood_test }}</td>
+      </tr>
+      <tr *ngIf="note?.imaging">
+        <th>Imaging</th>
+        <td>{{ note?.imaging }}</td>
+      </tr>
+      <tr *ngIf="note?.progress_further_management_plan">
+        <th>Further Management Plan</th>
+        <td>{{ note?.progress_further_management_plan }}</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- Trauma Note Details -->
+<section class="section" *ngIf="traumaNotes.length > 0">
+  <h3 class="sub-heading">Trauma Note Details</h3>
+  <div *ngFor="let note of traumaNotes" class="doctor-entry">
+    <div class="grid-3 user-header">
+      <div *ngIf="note?.submittedBy">
+        <strong>Doctor Name:</strong> {{ note?.submittedBy }}
+      </div>
+      <div *ngIf="note?.designation">
+        <strong>Designation:</strong> {{ note?.designation }}
+      </div>
+      <div *ngIf="note?.createdAt">
+        <strong>Date:</strong> {{ note?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div *ngIf="note?.createdAt">
+        <strong>Time:</strong> {{ note?.createdAt | date : "shortTime" }}
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="note.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      ></mat-slide-toggle>
+    </div>
+
+    <table class="mat-elevation-z2 full-width-table" *ngIf="note.showDetails">
+      <tr *ngIf="note.aho">
+        <th>A/H/O</th>
+        <td>{{ note?.aho }}</td>
+      </tr>
+      <tr *ngIf="note.aho === 'Others'">
+        <th>Place of Event</th>
+        <td>{{ note?.place_of_event }}</td>
+      </tr>
+      <tr *ngIf="note.aho === 'Others'">
+        <th>Date of Injury</th>
+        <td>{{ note?.date_of_injury | date }}</td>
+      </tr>
+      <tr *ngIf="note.aho === 'Others'">
+        <th>Time of Injury</th>
+        <td>{{ note.time_of_injury }}</td>
+      </tr>
+      <tr *ngIf="note?.mechanism_of_injury">
+        <th>Mechanism of Injury</th>
+        <td>{{ note?.mechanism_of_injury }}</td>
+      </tr>
+      <tr *ngIf="note?.mlc_no">
+        <th>MLC No.</th>
+        <td>{{ note?.mlc_no }}</td>
+      </tr>
+      <tr *ngIf="note?.presenting_complaints">
+        <th>Presenting Complaints</th>
+        <td>{{ note?.presenting_complaints }}</td>
+      </tr>
+      <tr *ngIf="note?.loss_of_consciousness">
+        <th>Loss of Consciousness</th>
+        <td>{{ note?.loss_of_consciousness }}</td>
+      </tr>
+      <tr *ngIf="note?.ent_bleed">
+        <th>ENT Bleed</th>
+        <td>{{ note?.ent_bleed }}</td>
+      </tr>
+      <tr *ngIf="note?.amnesia">
+        <th>Amnesia</th>
+        <td>{{ note?.amnesia }}</td>
+      </tr>
+      <tr *ngIf="note?.seizures">
+        <th>Seizures</th>
+        <td>{{ note?.seizures }}</td>
+      </tr>
+      <tr *ngIf="note?.vomiting">
+        <th>Vomiting</th>
+        <td>{{ note?.vomiting }}</td>
+      </tr>
+      <tr *ngIf="note?.injury_identified">
+        <th>Injury Identified</th>
+        <td>{{ note?.injury_identified }}</td>
+      </tr>
+      <tr *ngIf="note?.allergy_history">
+        <th>Allergy History</th>
+        <td>{{ note?.allergy_history }}</td>
+      </tr>
+      <tr *ngIf="note?.medication_history">
+        <th>Medication History</th>
+        <td>{{ note?.medication_history }}</td>
+      </tr>
+      <tr *ngIf="note?.past_history">
+        <th>Past History</th>
+        <td>{{ note?.past_history }}</td>
+      </tr>
+      <tr *ngIf="note?.lmp">
+        <th>LMP</th>
+        <td>{{ note?.lmp }}</td>
+      </tr>
+      <tr *ngIf="note?.upt">
+        <th>UPT</th>
+        <td>{{ note?.upt }}</td>
+      </tr>
+      <tr *ngIf="note?.last_meal">
+        <th>Last Meal</th>
+        <td>{{ note?.last_meal }}</td>
+      </tr>
+      <tr *ngIf="note?.prior_treatment">
+        <th>Treatment Before AIIMS</th>
+        <td>{{ note?.prior_treatment }}</td>
+      </tr>
+      <tr *ngIf="note?.treatment_plan">
+        <th>Treatment Plan</th>
+        <td>{{ note?.treatment_plan }}</td>
+      </tr>
+    </table>
+  </div>
+</section>

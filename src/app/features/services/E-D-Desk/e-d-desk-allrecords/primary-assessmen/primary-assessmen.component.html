@@ -1,0 +1,735 @@
+<div class="assessment-container">
+  <h2 class="section-heading">PRIMARY ASSESSMENT (ABCDE)</h2>
+
+  <!-- A - Airway -->
+  <section class="section">
+    <h3 class="sub-heading">A - Airway</h3>
+    <p>Open & Stable:</p>
+    <mat-radio-group class="radio-group" [(ngModel)]="airway_open_stable">
+      <mat-radio-button value="Yes">Yes</mat-radio-button>
+      <mat-radio-button value="No">No</mat-radio-button>
+    </mat-radio-group>
+  </section>
+
+  <!-- B - Breathing -->
+  <section class="section">
+    <h3 class="sub-heading">B - Breathing</h3>
+    <div>
+      <div class="values-section">
+        <!-- RR -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>RR ( / min )</mat-label>
+          <input
+            matInput
+            type="number"
+            name="rr"
+            [(ngModel)]="rr"
+            #rrCtrl="ngModel"
+            required
+            min="0"
+            max="80"
+          />
+          <mat-error *ngIf="rrCtrl.invalid && rrCtrl.touched">
+            <span *ngIf="rrCtrl.errors?.['required']">RR is required</span>
+            <span *ngIf="rrCtrl.errors?.['min']">RR cannot be less than 5</span>
+            <span *ngIf="rrCtrl.errors?.['max']"
+              >RR cannot be more than 80</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <!-- SpO₂ -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>SpO₂ (%)</mat-label>
+          <input
+            matInput
+            type="number"
+            name="spo2"
+            [(ngModel)]="spo2"
+            #spo2Ctrl="ngModel"
+            required
+            min="0"
+            max="100"
+          />
+          <mat-error *ngIf="spo2Ctrl.invalid && spo2Ctrl.touched">
+            <span *ngIf="spo2Ctrl.errors?.['required']">SpO₂ is required</span>
+            <span *ngIf="spo2Ctrl.errors?.['min']"
+              >SpO₂ cannot be negative</span
+            >
+            <span *ngIf="spo2Ctrl.errors?.['max']"
+              >SpO₂ cannot be more than 100%</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Respiratory Effort -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Respiratory Effort</mat-label>
+          <mat-select [(ngModel)]="respiratory_effort">
+            <mat-option value="normal">Normal</mat-option>
+            <mat-option value="laboured">Laboured</mat-option>
+            <mat-option value="shallow">Shallow</mat-option>
+            <mat-option value="other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Respiratory Effort Other (conditional) -->
+        <mat-form-field
+          *ngIf="respiratory_effort === 'other'"
+          appearance="outline"
+          class="form-field"
+        >
+          <mat-label>Other</mat-label>
+          <input
+            matInput
+            placeholder="Specify Effort"
+            [(ngModel)]="respEffortOther"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="form-field lungs-contener">
+        <!-- Left Section -->
+        <div class="lungs-section">
+          <h3 class="right-left">Left</h3>
+          <!-- Gross Added Sounds -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Gross Added Sounds</mat-label>
+            <mat-select [(ngModel)]="gross_added_sounds_Left">
+              <mat-option value="absent">Absent</mat-option>
+              <mat-option value="wheeze">Wheeze</mat-option>
+              <mat-option value="stridor">Stridor</mat-option>
+              <mat-option value="crepitations">Crepitations</mat-option>
+              <mat-option value="other">Other</mat-option>
+              <mat-option value="none">None</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Gross Added Sounds Other (conditional) -->
+          <mat-form-field
+            *ngIf="gross_added_sounds_Left === 'other'"
+            appearance="outline"
+            class="form-field"
+          >
+            <mat-label>Other</mat-label>
+            <input
+              matInput
+              placeholder="Specify Sound"
+              [(ngModel)]="grossSoundsOther_Left"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Center Image -->
+        <div class="lungs-image">
+             <div class="form-field air-entry">
+            <label><strong>Air Entry:</strong></label>
+            <mat-radio-group class="radio-group" [(ngModel)]="air_entry">
+              <mat-radio-button value="equal">Equal</mat-radio-button>
+              <mat-radio-button value="unequal">Unequal</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <img
+            src="../../../assets/lungsImage.png"
+            alt="AIIMS Logo"
+            class="brand-logo"
+          />
+        </div>
+
+        <!-- Right Section -->
+        <div class="lungs-section">
+          <h3 class="right-left">Right</h3>
+          <!-- Gross Added Sounds -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Gross Added Sounds</mat-label>
+            <mat-select [(ngModel)]="gross_added_sounds_right">
+              <mat-option value="absent">Absent</mat-option>
+              <mat-option value="wheeze">Wheeze</mat-option>
+              <mat-option value="stridor">Stridor</mat-option>
+              <mat-option value="crepitations">Crepitations</mat-option>
+              <mat-option value="other">Other</mat-option>
+              <mat-option value="none">None</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Gross Added Sounds Other (conditional) -->
+          <mat-form-field
+            *ngIf="gross_added_sounds_right === 'other'"
+            appearance="outline"
+            class="form-field"
+          >
+            <mat-label>Other</mat-label>
+            <input
+              matInput
+              placeholder="Specify Sound"
+              [(ngModel)]="grossSoundsOther_right"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C - Circulation -->
+  <section class="section">
+    <h3 class="sub-heading">C - Circulation</h3>
+
+    <div>
+      <div class="Circulation-section">
+        <!-- Pulse Rate -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Pulse Rate (/min)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="pulse_rate"
+            name="pulse_rate"
+            #pulseRateCtrl="ngModel"
+            required
+            min="0"
+            max="300"
+          />
+          <mat-error *ngIf="pulseRateCtrl.hasError('required')">
+            Pulse Rate is required
+          </mat-error>
+          <mat-error *ngIf="pulseRateCtrl.hasError('min')">
+            Value must be ≥ 0
+          </mat-error>
+          <mat-error *ngIf="pulseRateCtrl.hasError('max')">
+            Value must be ≤ 300
+          </mat-error>
+        </mat-form-field>
+
+        <!-- CRT -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>CRT (in seconds)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="crt_seconds"
+            name="crt_seconds"
+            #crtCtrl="ngModel"
+            required
+            min="1"
+            max="10"
+          />
+          <mat-error *ngIf="crtCtrl.hasError('required')">
+            CRT is required
+          </mat-error>
+          <mat-error *ngIf="crtCtrl.hasError('min')">
+            Value must be ≥ 1 second
+          </mat-error>
+          <mat-error *ngIf="crtCtrl.hasError('max')">
+            Value must be ≤ 10 seconds
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Skin -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Skin</mat-label>
+          <mat-select [(ngModel)]="skin">
+            <mat-option value="warm">Warm</mat-option>
+            <mat-option value="cold">Cold</mat-option>
+            <mat-option value="other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Skin - Other Input -->
+        <mat-form-field
+          *ngIf="skin === 'other'"
+          appearance="outline"
+          class="form-field"
+        >
+          <mat-label>Other</mat-label>
+          <input
+            matInput
+            placeholder="Enter Skin Other"
+            [(ngModel)]="skinOther"
+          />
+        </mat-form-field>
+      </div>
+      <div class="bp-container">
+        <!-- Right Arm -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>BP Right Arm (SBP/DBP)</mat-label>
+          <input
+            matInput
+            placeholder="e.g. 300/200"
+            [(ngModel)]="bp_right_arm"
+            name="bpRightArm"
+            required
+             pattern="^(0|[0-9]{2,3})\/(0|[0-9]{2,3})$"
+            #bpRightArm="ngModel"
+          />
+          <mat-error *ngIf="bpRightArm.hasError('required')">
+            Right Arm BP is required
+          </mat-error>
+          <mat-error *ngIf="bpRightArm.hasError('pattern')">
+            Enter in format SBP/DBP (e.g. 120/80)
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Left Arm -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>BP Left Arm (SBP/DBP)</mat-label>
+          <input
+            matInput
+            placeholder="e.g. 300/200"
+            [(ngModel)]="bp_left_arm"
+            name="bpLeftArm"
+            required
+            pattern="^[0-9]{2,3}\/[0-9]{2,3}$"
+            #bpLeftArm="ngModel"
+          />
+          <mat-error *ngIf="bpLeftArm.hasError('required')">
+            Left Arm BP is required
+          </mat-error>
+          <mat-error *ngIf="bpLeftArm.hasError('pattern')">
+            Enter in format SBP/DBP (e.g. 118/76)
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Other -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Other</mat-label>
+        <textarea
+          matInput
+          type="text"
+          [(ngModel)]="circulation_other"
+        ></textarea>
+      </mat-form-field>
+
+      <!-- Regular -->
+      <div class="form-field">
+        <label><strong>Pulse Rate Regular:</strong></label>
+        <mat-radio-group class="radio-group" [(ngModel)]="pulse_regular">
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- D - Disability -->
+  <section class="section">
+    <h3 class="sub-heading">D - Disability</h3>
+      <h5 class="gcs-heading">Glasgow Coma Scale</h5>
+      <div class="Disability-section">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>E</mat-label>
+          <mat-select [(ngModel)]="gcs_e" (selectionChange)="calculateGcsTotal()">
+            <mat-option [value]="null">Select Value</mat-option>
+            <mat-option *ngFor="let val of [1, 2, 3, 4]" [value]="val">{{
+              val
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>V</mat-label>
+          <mat-select [(ngModel)]="gcs_v" (selectionChange)="calculateGcsTotal()">
+            <mat-option [value]="null">Select Value</mat-option>
+            <mat-option *ngFor="let val of [1, 2, 3, 4, 5]" [value]="val">{{
+              val
+            }}</mat-option>
+            <mat-option value="T">T</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>M</mat-label>
+          <mat-select [(ngModel)]="gcs_m" (selectionChange)="calculateGcsTotal()">
+            <mat-option [value]="null">Select Value</mat-option>
+            <mat-option *ngFor="let val of [1, 2, 3, 4, 5, 6]" [value]="val">{{
+              val
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="Disability-section">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>GCS Values</mat-label>
+          <input
+            matInput
+            [value]="gcs_total"
+            placeholder="GCS Values"
+            readonly
+          />
+        </mat-form-field>
+
+      </div>
+    <div class="grid-3">
+      <div>
+        <h4>Pupil - Right Eye</h4>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Size (in mm)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="pupil_right_eye"
+            name="pupilRightEye"
+            required
+            min="0"
+            max="15"
+            #pupilRightEye="ngModel"
+          />
+          <mat-error *ngIf="pupilRightEye.hasError('required')">
+            Pupil size is required
+          </mat-error>
+          <mat-error
+            *ngIf="
+              pupilRightEye.hasError('min') || pupilRightEye.hasError('max')
+            "
+          >
+            Value must be between 0 and 15 mm
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Reaction to Light</mat-label>
+          <mat-select [(ngModel)]="reaction_to_light_right">
+            <mat-option [value]="null">Select Value</mat-option>
+            <mat-option value="yes">YES</mat-option>
+            <mat-option value="no">NO</mat-option>
+            <mat-option value="sluggish">SLUGGISH</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="lungs-image">
+        <img
+          style="width: 243px"
+          src="../../../assets/eyesImage.jpg"
+          alt="AIIMS Logo"
+          class="brand-logo"
+        />
+      </div>
+
+      <div>
+        <h4>Pupil - Left Eye</h4>
+        <!-- Left Eye -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Size (in mm)</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="pupil_left_eye"
+            name="pupilLeftEye"
+            required
+            min="0"
+            max="15"
+            #pupilLeftEye="ngModel"
+          />
+          <mat-error *ngIf="pupilLeftEye.hasError('required')">
+            Pupil size is required
+          </mat-error>
+          <mat-error
+            *ngIf="pupilLeftEye.hasError('min') || pupilLeftEye.hasError('max')"
+          >
+            Value must be between 0 and 15 mm
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Reaction to Light</mat-label>
+          <mat-select [(ngModel)]="reaction_to_light_left">
+            <mat-option [value]="null">Select Value</mat-option>
+            <mat-option value="yes">YES</mat-option>
+            <mat-option value="no">NO</mat-option>
+            <mat-option value="Right-eye">SLUGGISH</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div>
+        <p><strong>Asymmetry in limb movement</strong></p>
+        <mat-radio-group
+          class="radio-group"
+          [(ngModel)]="asymmetry_limb_movement"
+        >
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <p><strong>Facial asymmetry</strong></p>
+        <mat-radio-group class="radio-group" [(ngModel)]="facial_asymmetry">
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <p><strong>Posturing</strong></p>
+        <mat-radio-group class="radio-group" [(ngModel)]="posturing">
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </section>
+
+  <!-- E - Exposure -->
+  <section class="section">
+    <h3 class="sub-heading">E - Exposure</h3>
+
+    <div class="grid-3">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Temperature (°F)</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="temperature_f"
+          name="temperature_f"
+          required
+          min="80"
+          max="120"
+          #tempCtrl="ngModel"
+        />
+        <mat-error *ngIf="tempCtrl.errors?.['required']">
+          Temperature is required
+        </mat-error>
+        <mat-error *ngIf="tempCtrl.errors?.['min']">
+          Value must be ≥ 80°F
+        </mat-error>
+        <mat-error *ngIf="tempCtrl.errors?.['max']">
+          Value must be ≤ 120°F
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-field">
+        <mat-label>Rash</mat-label>
+        <mat-radio-group class="radio-group" [(ngModel)]="rash">
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="form-field">
+        <mat-label>Cynosis</mat-label>
+        <mat-radio-group class="radio-group" [(ngModel)]="cynosis">
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <!-- Other -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Other</mat-label>
+      <textarea matInput type="text" [(ngModel)]="assessment_other"></textarea>
+    </mat-form-field>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+      <button mat-raised-button color="warn" (click)="onCancel()">
+        Cancel
+      </button>
+      <button mat-raised-button color="accent" (click)="onReset()">
+        Clear
+      </button>
+    </div>
+  </section>
+</div>
+
+<section class="section" *ngIf="assessmentData">
+  <div class="header_togglebtn">
+    <h3 class="sub-heading">📝 Primary Assessment Details</h3>
+    <mat-slide-toggle
+      [(ngModel)]="assessmentData.showDetails"
+      color="primary"
+      class="custom-slide-toggle"
+    ></mat-slide-toggle>
+  </div>
+
+  <div class="user-header">
+    <div><strong>Doctor Name:</strong> {{ assessmentData.submittedBy }}</div>
+    <div><strong>Designation:</strong> {{ assessmentData.designation }}</div>
+    <div>
+      <strong>Date:</strong>
+      {{ assessmentData.createdAt | date : "dd-MM-yyyy" }}
+    </div>
+    <div>
+      <strong>Time:</strong> {{ assessmentData.createdAt | date : "shortTime" }}
+    </div>
+  </div>
+
+  <!-- A - Airway -->
+  <div class="assessment-block" *ngIf="assessmentData.showDetails">
+    <h3 class="section-heading">A - Airway</h3>
+    <div class="assessment-item">
+      <strong>Airway Stable:</strong> {{ assessmentData.airway_open_stable }}
+    </div>
+  </div>
+  <!-- ✅ B - Breathing in Assessment Details -->
+  <div class="assessment-block" *ngIf="assessmentData.showDetails">
+    <h3 class="section-heading">B - Breathing</h3>
+
+    <div class="lungs-details">
+      <div class="assessment-item">
+        <strong>RR:</strong> {{ assessmentData.rr }}
+      </div>
+      <div class="assessment-item">
+        <strong>SpO₂:</strong> {{ assessmentData.spo2 }}%
+      </div>
+      <div class="assessment-item">
+        <strong>Respiratory Effort:</strong>
+        {{ assessmentData.respiratory_effort }}
+      </div>
+      <div class="assessment-item" *ngIf="assessmentData.breathing_other">
+        <strong>Other:</strong> {{ assessmentData.breathing_other }}
+      </div>
+    </div>
+
+    <!-- Lungs Left & Right -->
+    <div>
+      <div class="lungs-side">
+        <h4>Left Lung</h4>
+        <div *ngIf="assessmentData.gross_added_sounds_Left">
+          <strong>Gross Added Sounds:</strong>
+          {{ assessmentData.gross_added_sounds_Left }}
+        </div>
+        <div *ngIf="assessmentData.grossSoundsOther_Left">
+          <strong>Other:</strong> {{ assessmentData.grossSoundsOther_Left }}
+        </div>
+      </div>
+      <div class="lungs-side">
+        <strong>Air Entry:</strong> {{ assessmentData.air_entry }}
+      </div>
+      <!-- Right -->
+      <div class="lungs-side">
+        <h4>Right Lung</h4>
+        <div>
+          <strong>Gross Added Sounds:</strong>
+          {{ assessmentData.gross_added_sounds_right }}
+        </div>
+        <div *ngIf="assessmentData.grossSoundsOther_right">
+          <strong>Other:</strong> {{ assessmentData.grossSoundsOther_right }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ C - Circulation -->
+  <div class="assessment-block" *ngIf="assessmentData.showDetails">
+    <h3 class="section-heading">C - Circulation</h3>
+
+    <div class="assessment-grid">
+      <div class="assessment-item">
+        <strong>Pulse Rate:</strong> {{ assessmentData.pulse_rate }} /min
+      </div>
+      <div class="assessment-item">
+        <strong>CRT:</strong> {{ assessmentData.crt_seconds }} sec
+      </div>
+      <div class="assessment-item">
+        <strong>Skin:</strong> {{ assessmentData.skin }}
+      </div>
+      <div class="assessment-item" *ngIf="assessmentData.skinOther">
+        <strong>Other:</strong> {{ assessmentData.skinOther }}
+      </div>
+      <div class="assessment-item">
+        <strong>BP Right Arm:</strong> {{ assessmentData.bp_right_arm }}
+      </div>
+      <div class="assessment-item">
+        <strong>BP Left Arm:</strong> {{ assessmentData.bp_left_arm }}
+      </div>
+      <div class="assessment-item">
+        <strong>Circulation Other:</strong>
+        {{ assessmentData.circulation_other }}
+      </div>
+      <div class="assessment-item">
+        <strong>Pulse Regular:</strong> {{ assessmentData.pulse_regular }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ D - Disability -->
+  <div class="assessment-block" *ngIf="assessmentData.showDetails">
+    <h3 class="section-heading">D - Disability</h3>
+
+    <!-- GCS -->
+    <div class="assessment-grid">
+      <div class="assessment-item">
+        <strong>E:</strong> {{ assessmentData.gcs_e }}
+      </div>
+      <div class="assessment-item">
+        <strong>V:</strong> {{ assessmentData.gcs_v }}
+      </div>
+      <div class="assessment-item">
+        <strong>M:</strong> {{ assessmentData.gcs_m }}
+      </div>
+      <div class="assessment-item">
+        <strong>Total GCS:</strong> {{ assessmentData.gcs_total }}
+      </div>
+    </div>
+
+    <!-- Pupils -->
+    <div class="lungs-details">
+      <div class="lungs-side">
+        <h4>Right Eye</h4>
+        <div>
+          <strong>Size:</strong> {{ assessmentData.pupil_right_eye }} mm
+        </div>
+        <div>
+          <strong>Reaction to Light:</strong>
+          {{ assessmentData.reaction_to_light_right }}
+        </div>
+      </div>
+      <div class="lungs-side">
+        <h4>Left Eye</h4>
+        <div><strong>Size:</strong> {{ assessmentData.pupil_left_eye }} mm</div>
+        <div>
+          <strong>Reaction to Light:</strong>
+          {{ assessmentData.reaction_to_light_left }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Disability Signs -->
+    <div class="assessment-grid">
+      <div class="assessment-item">
+        <strong>Asymmetry in Limb Movement:</strong>
+        {{ assessmentData.asymmetry_limb_movement }}
+      </div>
+      <div class="assessment-item">
+        <strong>Facial Asymmetry:</strong> {{ assessmentData.facial_asymmetry }}
+      </div>
+      <div class="assessment-item">
+        <strong>Posturing:</strong> {{ assessmentData.posturing }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ E - Exposure -->
+  <div class="assessment-block" *ngIf="assessmentData.showDetails">
+    <h3 class="section-heading">E - Exposure</h3>
+
+    <div class="assessment-grid">
+      <div class="assessment-item">
+        <strong>Temperature:</strong> {{ assessmentData.temperature_f }} °F
+      </div>
+      <div class="assessment-item">
+        <strong>Rash:</strong> {{ assessmentData.rash }}
+      </div>
+      <div class="assessment-item">
+        <strong>Cynosis:</strong> {{ assessmentData.cynosis }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Other -->
+  <div
+    class="assessment-block"
+    *ngIf="assessmentData.showDetails && assessmentData.assessment_other"
+  >
+    <h3 class="section-heading">Other Notes</h3>
+    <div class="assessment-item">{{ assessmentData.assessment_other }}</div>
+  </div>
+</section>

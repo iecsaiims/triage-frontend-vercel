@@ -1,0 +1,156 @@
+<app-header></app-header>
+
+<div class="enc-container">
+
+  <!-- PATIENT INFO -->
+  <mat-card class="patient-card" *ngIf="patient">
+    <h2 class="section-title">Patient Details</h2>
+
+    <div class="patient-info-box">
+      <div class="info-row"><strong>Name:</strong> {{ patient.name }}</div>
+      <div class="info-row"><strong>Gender:</strong> {{ patient.gender }}</div>
+      <div class="info-row"><strong>Age:</strong> {{ patient.age }}</div>
+    </div>
+  </mat-card>
+
+  <!-- CONSULTATION CALL RECORDS -->
+  <mat-card class="section-card" *ngIf="callRecords.length > 0">
+    <h2 class="section-title">Consultation Calls</h2>
+
+    <div *ngFor="let call of callRecords; let i = index" class="call-box">
+      <mat-card class="call-card">
+
+        <div class="call-header">
+          <span class="call-title">Call {{ i + 1 }}</span>
+
+          <span class="call-status"
+                [ngClass]="call.completed === 'Yes' ? 'done' : 'pending'">
+            {{ call.completed === 'Yes' ? 'Completed' : 'Pending' }}
+          </span>
+        </div>
+
+        <div *ngIf="call.completed === 'No'; else finalCall">
+          <div class="details-grid">
+            <div><strong>Department:</strong> {{ call.department }}</div>
+            <div><strong>Doctor:</strong> {{ call.doctorName }}</div>
+            <div><strong>Call Given By:</strong> {{ call.callGivenBy }}</div>
+            <div><strong>Time:</strong> {{ call.time }}</div>
+          </div>
+        </div>
+
+        <ng-template #finalCall>
+          <p class="final-msg">Final Consultation Completed</p>
+        </ng-template>
+
+      </mat-card>
+    </div>
+  </mat-card>
+
+  <!-- FINAL MSG -->
+  <mat-card class="section-card success-card" *ngIf="finalCallSaved">
+    <h2 class="section-title green">Final Consultation Completed</h2>
+    <p class="info-text">You cannot add more calls.</p>
+  </mat-card>
+
+  <!-- ADD CONSULTATION FORM -->
+  <mat-card class="section-card" *ngIf="!isFinalConsultationCompleted">
+    <h2 class="section-title">Add Consultation Call</h2>
+
+    <form class="form-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Consultation Completed</mat-label>
+        <mat-select [(ngModel)]="consultationCompleted" name="completed">
+          <mat-option value="">-- Select --</mat-option>
+          <mat-option value="No">No</mat-option>
+          <mat-option value="Yes">Yes</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- When NO -->
+      <div *ngIf="consultationCompleted === 'No'" class="sub-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select [(ngModel)]="form.department" name="department">
+            <mat-option *ngFor="let d of departments" [value]="d">{{ d }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Doctor Name</mat-label>
+          <input matInput [(ngModel)]="form.doctorName" name="doctorName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Call Given By</mat-label>
+          <input matInput [(ngModel)]="form.callGivenBy" name="callGivenBy" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Time</mat-label>
+          <input matInput type="time" [(ngModel)]="form.time" name="time" />
+        </mat-form-field>
+      </div>
+
+      <!-- When YES -->
+      <div *ngIf="consultationCompleted === 'Yes'" class="yes-box">
+        <div class="yes-warning">This will be marked as the final consultation.</div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Time</mat-label>
+          <input matInput type="time" [(ngModel)]="form.time" name="time" />
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" class="save-btn"
+              (click)="saveConsultationRecord()">
+        Save Consultation
+      </button>
+    </form>
+  </mat-card>
+
+  <!-- DISPOSITION SECTION -->
+  <mat-card class="section-card success-card" *ngIf="dispositionSaved">
+    <h2 class="section-title green">Disposition Details</h2>
+    <p><strong>Status:</strong> {{ disposition.status }}</p>
+    <p><strong>Time:</strong> {{ disposition.time }}</p>
+    <p><strong>Notes:</strong> {{ disposition.notes }}</p>
+  </mat-card>
+
+  <mat-card class="section-card" *ngIf="!dispositionSaved">
+    <h2 class="section-title">Disposition</h2>
+
+    <form class="form-grid">
+
+
+      <div class="sub-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Disposition Status</mat-label>
+          <mat-select [(ngModel)]="dispositionForm.status" name="dstatus">
+            <mat-option value="">-- Select --</mat-option>
+            <mat-option *ngFor="let d of ['Discharge','Admit','Refer','Abscond','LAMA','Death']"
+                        [value]="d">
+              {{ d }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Time</mat-label>
+          <input matInput type="time" [(ngModel)]="dispositionForm.time" name="dtime" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <textarea matInput rows="2" [(ngModel)]="dispositionForm.notes" name="dnotes"></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" class="save-btn"
+              (click)="saveDisposition()">
+        Save Disposition
+      </button>
+    </form>
+  </mat-card>
+
+</div>

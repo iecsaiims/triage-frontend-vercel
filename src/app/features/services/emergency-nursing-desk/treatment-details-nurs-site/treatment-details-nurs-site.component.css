@@ -1,0 +1,129 @@
+.section {
+  margin-top: 32px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+.sub-heading {
+  color: #2a3f54;
+  font-size: 20px;
+    margin: 0px;
+  }
+.treatment-values{
+      display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 20px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.treatment-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+::ng-deep .custom-slide-toggle {
+  transform: scale(0.7);
+}
+
+::ng-deep .custom-slide-toggle .mdc-switch__track::after {
+  background: #cfa359 !important;
+}
+::ng-deep .mdc-switch--selected .mdc-switch__icon {
+  fill: #cfa359 !important;
+}
+.card-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.grid-2 {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 12px;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .grid-3 div {
+    font-size: 14px;
+  }
+
+  .sub-heading {
+    font-size: 16px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .entry-header {
+    display: contents;
+  }
+}
+
+
+::ng-deep .entry-header .mdc-checkbox__checkmark {
+  color: #eef7ee !important;
+}
+
+::ng-deep .entry-header .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  border-color: #037e01 !important; 
+  background-color: #06880e !important; 
+}
+
+::ng-deep .entry-header .mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: #408b09 !important;
+  background-color: #ffffff !important;
+}
+.treatment-section{
+      display: flex
+;
+    justify-content: space-between;
+    align-items: center;
+}
+.nursing-entry-heading{
+  text-align: center;
+}
+.treatment-content{
+      padding: 25px;
+}
+.blink {
+  color: red;
+  font-weight: bold;
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+.done {
+  color: green;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.nextDoseTime-allert{
+      padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}

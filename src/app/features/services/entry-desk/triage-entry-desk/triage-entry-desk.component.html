@@ -1,0 +1,290 @@
+<app-header></app-header>
+<mat-card *ngIf="patient" class="patient-card">
+  <mat-card-content>
+    <!-- Patient Details -->
+    <div class="section">
+      <h3 class="section-title">🩺 Patient Details</h3>
+      <div class="info-grid enhanced-info-grid">
+        <div class="info-row"><strong>Name:</strong> {{ patient?.name }}</div>
+        <div class="info-row">
+          <strong>CR No:</strong> {{ patient?.crNumber }}
+        </div>
+        <div class="info-row">
+          <strong>Gender:</strong> {{ patient?.gender }}
+        </div>
+        <div class="info-row"><strong>Age:</strong> {{ patient?.age }}</div>
+        <div class="info-row">
+          <strong>Guardian:</strong> {{ patient?.guardianName }}
+        </div>
+        <div class="info-row">
+          <strong>Visit Date:</strong>
+          {{ patient?.createdAt | date : "dd/MM/yyyy" }}
+        </div>
+        <div class="info-row">
+          <strong>Visit Time:</strong>
+          {{ patient?.createdAt | date : "hh:mm:ss a" }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Triage & Emergency Info -->
+    <div class="section">
+      <h3 class="section-title">🚑 Triage & Emergency Info</h3>
+      <form [formGroup]="triageForm" class="form-grid">
+        <div class="info-grid triage-info-grid">
+          <!-- Arrival Mode -->
+          <mat-form-field appearance="outline">
+            <mat-label>Arrival Mode</mat-label>
+            <mat-select formControlName="arrivalMode">
+              <mat-option value="AMBULANCE">Ambulance</mat-option>
+              <mat-option value="SELF">Self</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Referral Status -->
+          <mat-form-field appearance="outline">
+            <mat-label>Referral Status</mat-label>
+            <mat-select formControlName="referralStatus">
+              <mat-option value="DIRECT">Direct</mat-option>
+              <mat-option value="OUTSIDE">Admitted Outside</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Emergency Type -->
+          <mat-form-field appearance="outline">
+            <mat-label>Emergency Type</mat-label>
+            <mat-select formControlName="emergencyType">
+              <mat-option value="TRAUMA">TRAUMA</mat-option>
+              <mat-option value="NON-TRAUMA">NON-TRAUMA</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+
+        <div class="heding">
+          <div class="viewDetails">
+            <mat-form-field appearance="outline">
+              <mat-label>Pulse rate</mat-label>
+              <input matInput formControlName="pulse" type="number" />
+              <mat-error *ngIf="triageForm.get('pulse')?.hasError('required')">
+                Pulse is required
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('pulse')?.hasError('min')">
+                Value must be ≥ 0
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('pulse')?.hasError('max')">
+                Value must be ≤ 300
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>SBP (mmHg)</mat-label>
+              <input matInput formControlName="sbp" type="number" />
+              <mat-error *ngIf="triageForm.get('sbp')?.hasError('required')">
+                SBP is required
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('sbp')?.hasError('min')">
+                Value must be ≥ 0
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('sbp')?.hasError('max')">
+                Value must be ≤ 300
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>DBP (mmHg)</mat-label>
+              <input matInput formControlName="dbp" />
+              <mat-error *ngIf="triageForm.get('dbp')?.hasError('required')">
+                DBP is required
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('dbp')?.hasError('min')">
+                Value must be ≥ 0
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('dbp')?.hasError('max')">
+                Value must be ≤ 300
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="viewDetails">
+            <mat-form-field appearance="outline">
+              <mat-label>RR (/min)</mat-label>
+              <input matInput formControlName="rr" type="number" />
+              <mat-error *ngIf="triageForm.get('rr')?.hasError('required')">
+                Respiratory rate is required
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('rr')?.hasError('min')">
+                Value must be ≥ 0
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('rr')?.hasError('max')">
+                Value must be ≤ 80
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>SpO₂ (%)</mat-label>
+              <input matInput formControlName="spo2" type="number" />
+              <mat-error *ngIf="triageForm.get('spo2')?.hasError('required')">
+                SpO₂ is required
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('spo2')?.hasError('min')">
+                Value must be ≥ 0
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('spo2')?.hasError('max')">
+                Value must be ≤ 100
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Temp (°F)</mat-label>
+              <input matInput formControlName="temp" type="number" />
+              <mat-error *ngIf="triageForm.get('temp')?.hasError('required')">
+                Temperature is required
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('temp')?.hasError('min')">
+                Value must be ≥ 0
+              </mat-error>
+              <mat-error *ngIf="triageForm.get('temp')?.hasError('max')">
+                Value must be ≤ 120
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="heding">
+          <!-- Status -->
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="ALERT">Alert</mat-option>
+              <mat-option value="VERBAL">Verbal</mat-option>
+              <mat-option value="PAIN">Pain</mat-option>
+              <mat-option value="UNRESPONSIVE">Unresponsive</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- Triage -->
+          <mat-form-field appearance="outline">
+            <mat-label>Triage</mat-label>
+            <mat-select formControlName="triage">
+              <!-- Auto-triage explanation -->
+              <!-- <div *ngIf="hasAutoReasons" class="auto-triage-box">
+                <strong>Auto-triage reasoning:</strong>
+                <ul>
+                  <li *ngFor="let r of autoReasons">{{ r }}</li>
+                </ul>
+              </div> -->
+              <mat-option value="" disabled>Select triage</mat-option>
+              <mat-option value="RED">RED</mat-option>
+              <mat-option value="YELLOW">YELLOW</mat-option>
+              <mat-option value="GREEN">GREEN</mat-option>
+              <mat-option value="BLACK">BLACK</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- Triage Protocol -->
+
+          <!-- <p class="triage-protocol" (click)="openPdf()">Triage Protocol</p> -->
+          <div class="triage-tools">
+            <!-- Auto-triage badge + popup -->
+            <div class="auto-triage-wrap" *ngIf="autoCategory">
+              <div class="auto-title">Auto-triage suggestion</div>
+
+              <div class="auto-row">
+                <span class="auto-badge" [ngClass]="autoCategory.toLowerCase()">
+                  {{ autoCategory }}
+                </span>
+              </div>
+
+              <ul class="auto-reasons" *ngIf="hasAutoReasons">
+                <li *ngFor="let r of autoReasons">{{ r }}</li>
+              </ul>
+            </div>
+
+            <!-- Triage Protocol -->
+            <p class="triage-protocol" (click)="openPdf()">Triage Protocol</p>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal" [ngClass]="{ show: isPdfOpen }" (click)="closeOnOutside($event)">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+              <span class="close" (click)="closePdf()">&times;</span>
+              <iframe src="../../../../../assets/pdf/aiims-raipur-triage.pdf" width="100%" height="600px"
+                style="border: none" title="AIIMS Raipur Triage PDF Document">
+              </iframe>
+            </div>
+          </div>
+
+        </div>
+        <!-- Complaints -->
+        <div formArrayName="complaints" class="complaints-section info-grid">
+          <div class="complaint-header">
+            <h4 class="heding">Chief complaint(s)</h4>
+
+            <!-- 🎤 Voice Input Button -->
+            <button mat-icon-button type="button" (click)="toggleVoice()" [color]="listening() ? 'warn' : 'primary'"
+              aria-label="Voice input for complaint">
+              <mat-icon>{{ listening() ? 'mic_off' : 'mic' }}</mat-icon>
+            </button>
+          </div>
+
+          <!-- Voice status hint -->
+          <div class="voice-hint" *ngIf="voiceHint()">
+            {{ voiceHint() }}
+          </div>
+
+          <div *ngFor="let c of complaints.controls; let i = index" [formGroupName]="i" class="complaint-row">
+            <div class="input-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Complaint</mat-label>
+                <input matInput formControlName="complaint" />
+                <mat-error *ngIf="c.get('complaint')?.hasError('required')">
+                  Complaint is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Duration</mat-label>
+                <input matInput formControlName="duration" />
+                <mat-error *ngIf="c.get('duration')?.hasError('required')">
+                  Duration is required
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Remove Button -->
+              <div>
+                <button mat-icon-button color="warn" type="button" (click)="removeComplaint(i)">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="heding">
+            <button mat-stroked-button color="primary" type="button" (click)="addComplaint()">
+              + Add Complaint
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+
+  <!-- Success/Error -->
+  <div *ngIf="successMessage" class="message-box">
+    <span class="success-message">{{ successMessage }}</span>
+  </div>
+
+  <!-- Buttons -->
+  <mat-card-actions class="button-row">
+    <button mat-stroked-button color="accent" (click)="saveDraft()">
+      Save Draft
+    </button>
+    <button mat-raised-button color="primary" (click)="saveTriageInfo()" [disabled]="isSubmitting">
+      {{ isSubmitting ? "Saving..." : "Submit" }}
+    </button>
+    <button mat-raised-button color="warn" (click)="clearForm()">Clear</button>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
+
+<!-- Fallback -->
+<div *ngIf="!patient" class="no-patient">
+  <p>Patient not found.</p>
+  <button mat-raised-button color="primary" (click)="cancel()">
+    Back to List
+  </button>
+</div>

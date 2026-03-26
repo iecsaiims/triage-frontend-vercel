@@ -1,0 +1,498 @@
+<section class="section" *ngIf="patient">
+  <h3 class="sub-heading">Patient Details</h3>
+  <div class="grid-3">
+    <div><strong>Name:</strong> {{ patient?.name }}</div>
+    <div><strong>Guardian Name:</strong> {{ patient?.guardianName }}</div>
+    <div><strong>Age:</strong> {{ patient?.age }}</div>
+    <div><strong>Gender:</strong> {{ patient?.gender }}</div>
+    <div><strong>CR Number:</strong> {{ patient?.crNumber }}</div>
+  </div>
+</section>
+
+<!-- Select Template -->
+<section class="section selectedTemplate">
+  <h3 class="sub-heading">Investigation Details</h3>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Select Template</mat-label>
+    <mat-select [(ngModel)]="selectedTemplate">
+      <mat-option value=" ">Select</mat-option>
+      <mat-option value="cbc">Complete Blood Count</mat-option>
+      <mat-option value="lft">Liver Function Test</mat-option>
+      <mat-option value="kft">Kidney Function Test</mat-option>
+      <mat-option value="urine">Urine Test</mat-option>
+      <mat-option value="ct">Coagulation Test</mat-option>
+    </mat-select>
+  </mat-form-field>
+</section>
+
+<!-- Complete Blood Count Template -->
+<section class="section" *ngIf="selectedTemplate === 'cbc'">
+  <div class="cbc-form">
+    <h3 class="sub-heading">🧬 CBC (Complete Blood Count)</h3>
+
+    <div class="cbc-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Hemoglobin</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="hemoglobin"
+          name="hemoglobin"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>HCT</mat-label>
+        <input matInput type="number" [(ngModel)]="hct" name="hct" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>MCV</mat-label>
+        <input matInput type="number" [(ngModel)]="mcv" name="mcv" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>RDW-CV</mat-label>
+        <input matInput type="number" [(ngModel)]="rdwcv" name="rdwcv" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>TLC</mat-label>
+        <input matInput type="number" [(ngModel)]="tlc" name="tlc" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Neutrophils (%)</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="neutrophils"
+          name="neutrophils"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Lymphocytes (%)</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="lymphocytes"
+          name="lymphocytes"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Monocytes (%)</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="monocytes"
+          name="monocytes"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Eosinophils (%)</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="eosinophils"
+          name="eosinophils"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Basophil (%)</mat-label>
+        <input matInput type="number" [(ngModel)]="basophil" name="basophil" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Platelet Count</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="plateletCount"
+          name="plateletCount"
+        />
+      </mat-form-field>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="saveCbcOrder()">
+      Save
+    </button>
+  </div>
+</section>
+
+<!-- LFT Form -->
+<section class="section" *ngIf="selectedTemplate === 'lft'">
+  <div class="cbc-form">
+    <h3 class="sub-heading">Liver Function Test (LFT)</h3>
+
+    <div class="cbc-grid">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Total Bilirubin (T.Bill)</mat-label>
+        <input matInput type="number" [(ngModel)]="tBill" name="tBill" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Direct Bilirubin (D.Bill)</mat-label>
+        <input matInput type="number" [(ngModel)]="dBill" name="dBill" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Indirect Bilirubin (I.Bill)</mat-label>
+        <input matInput type="number" [(ngModel)]="iBill" name="iBill" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>AST (SGOT)</mat-label>
+        <input matInput type="number" [(ngModel)]="ast" name="ast" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>ALT (SGPT)</mat-label>
+        <input matInput type="number" [(ngModel)]="alt" name="alt" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>ALP (Alkaline Phosphatase)</mat-label>
+        <input matInput type="number" [(ngModel)]="alp" name="alp" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Total Protein</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="totalProtein"
+          name="totalProtein"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Albumin</mat-label>
+        <input matInput type="number" [(ngModel)]="albumin" name="albumin" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Globulin</mat-label>
+        <input matInput type="number" [(ngModel)]="globulin" name="globulin" />
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="saveLftOrder()">
+      Save
+    </button>
+  </div>
+</section>
+
+<!-- Kidney Function Test Template -->
+<section class="section" *ngIf="selectedTemplate === 'kft'">
+  <div class="cbc-form">
+    <h3 class="sub-heading">Kidney Function Test (KFT)</h3>
+    <div class="cbc-grid">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Urea</mat-label>
+        <input matInput type="number" [(ngModel)]="urea" name="urea" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Creatinine</mat-label>
+        <input matInput type="number" [(ngModel)]="creatine" name="creatine" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Sodium</mat-label>
+        <input matInput type="number" [(ngModel)]="na" name="na" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Potassium</mat-label>
+        <input matInput type="number" [(ngModel)]="k" name="k" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Chloride</mat-label>
+        <input matInput type="number" [(ngModel)]="cl" name="cl" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Uric Acid</mat-label>
+        <input matInput type="number" [(ngModel)]="uricAcid" name="uricAcid" />
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" (click)="saveKftOrder()">
+      Save
+    </button>
+  </div>
+</section>
+
+<!-- Urine Test Template -->
+<section class="section" *ngIf="selectedTemplate === 'urine'">
+  <div class="cbc-form">
+    <h3 class="sub-heading">Urine Test</h3>
+    <div class="cbc-grid">
+      <!-- Ketones -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Ketones</mat-label>
+        <mat-select [(ngModel)]="ketones" name="ketones">
+          <mat-option value="1+">1+</mat-option>
+          <mat-option value="2+">2+</mat-option>
+          <mat-option value="3+">3+</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Nitrites -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nitrites</mat-label>
+        <mat-select [(ngModel)]="nitrites" name="nitrites">
+          <mat-option value="1+">1+</mat-option>
+          <mat-option value="2+">2+</mat-option>
+          <mat-option value="3+">3+</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Urine Culture -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Urine Culture</mat-label>
+        <input matInput [(ngModel)]="urineCulture" name="urineCulture" />
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="saveUrineOrder()">
+      Save
+    </button>
+  </div>
+</section>
+
+<!-- Coagulation  Test -->
+<section class="section" *ngIf="selectedTemplate === 'ct'">
+  <div class="cbc-form">
+    <h3 class="sub-heading">Coagulation Test</h3>
+    <div class="cbc-grid">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>PT/INR</mat-label>
+        <input matInput type="number" [(ngModel)]="ptinr" name="ptinr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>APTTT</mat-label>
+        <input matInput type="number" [(ngModel)]="apttt" name="apttt" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>D-Dimer</mat-label>
+        <input matInput type="number" [(ngModel)]="dDimer" name="dDimer" />
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="saveCoagulationOrder()">
+      Save
+    </button>
+  </div>
+</section>
+
+<!-- CBC Records Template -->
+<section class="section" *ngIf="cbcRecords.length > 0">
+  <h3 class="sub-heading">CBC Records</h3>
+  <div *ngFor="let cbc of cbcRecords" class="doctor-entry">
+    <div class="entry-header">
+      <div><strong>Doctor Name:</strong> {{ cbc?.submitted_by }}</div>
+      <div><strong>Designation:</strong> {{ cbc?.designation }}</div>
+      <div>
+        <strong>Date:</strong> {{ cbc?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div>
+        <strong>Time:</strong> {{ cbc?.createdAt | date : "shortTime" }}
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="cbc.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+    <section class="cbc-details" *ngIf="cbc.showDetails">
+      <div class="cbc-grid">
+        <div class="cbc-item">
+          <strong>Time:</strong> {{ cbc.createdAt | date : "shortTime" }}
+        </div>
+        <div class="cbc-item">
+          <strong>Date:</strong> {{ cbc.createdAt | date : "dd-MM-yyyy" }}
+        </div>
+        <div class="cbc-item">
+          <strong>Hemoglobin:</strong> {{ cbc.hemoglobin }}
+        </div>
+
+        <div class="cbc-item"><strong>HCT:</strong> {{ cbc.hct }}</div>
+        <div class="cbc-item"><strong>MCV:</strong> {{ cbc.mcv }}</div>
+        <div class="cbc-item"><strong>RDW-CV:</strong> {{ cbc.rdwcv }}</div>
+
+        <div class="cbc-item"><strong>TLC:</strong> {{ cbc.tlc }}</div>
+        <div class="cbc-item">
+          <strong>Neutrophils (%):</strong> {{ cbc.neutrophils }}
+        </div>
+        <div class="cbc-item">
+          <strong>Lymphocytes (%):</strong> {{ cbc.lymphocytes }}
+        </div>
+
+        <div class="cbc-item">
+          <strong>Monocytes (%):</strong> {{ cbc.monocytes }}
+        </div>
+        <div class="cbc-item">
+          <strong>Eosinophils (%):</strong> {{ cbc.eosinophils }}
+        </div>
+        <div class="cbc-item">
+          <strong>Basophil (%):</strong> {{ cbc.basophil }}
+        </div>
+
+        <div class="cbc-item">
+          <strong>Platelet Count:</strong> {{ cbc.plateletCount }}
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- LFT Records (Saved Data) -->
+<section *ngIf="lftRecords.length > 0" class="section">
+  <h3 class="sub-heading">LFT Records</h3>
+
+  <!-- Repeat for each record -->
+  <div *ngFor="let lft of lftRecords" class="lft-card">
+    <!-- Header Row -->
+    <div class="entry-header">
+      <div><strong>Doctor Name:</strong> {{ lft?.submitted_by }}</div>
+      <div><strong>Designation:</strong> {{ lft?.designation }}</div>
+      <div>
+        <strong>Date:</strong> {{ lft?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div>
+        <strong>Time:</strong> {{ lft?.createdAt | date : "shortTime" }}
+      </div>
+
+      <!-- Toggle for Show/Hide details -->
+      <mat-slide-toggle
+        [(ngModel)]="lft.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="cbc-grid" *ngIf="lft.showDetails">
+      <div class="cbc-item"><strong>T. Bill:</strong> {{ lft.tBill }}</div>
+      <div class="cbc-item"><strong>D. Bill:</strong> {{ lft.dBill }}</div>
+      <div class="cbc-item"><strong>I. Bill:</strong> {{ lft.iBill }}</div>
+      <div class="cbc-item"><strong>AST:</strong> {{ lft.ast }}</div>
+      <div class="cbc-item"><strong>ALT:</strong> {{ lft.alt }}</div>
+      <div class="cbc-item"><strong>ALP:</strong> {{ lft.alp }}</div>
+      <div class="cbc-item">
+        <strong>Total Protein:</strong> {{ lft.totalProtein }}
+      </div>
+      <div class="cbc-item"><strong>Albumin:</strong> {{ lft.albumin }}</div>
+      <div class="cbc-item"><strong>Globulin:</strong> {{ lft.globulin }}</div>
+    </div>
+  </div>
+</section>
+
+<!-- KFT Records -->
+<section *ngIf="kftRecords.length > 0" class="section">
+  <h3 class="sub-heading">KFT Records</h3>
+
+  <div *ngFor="let kft of kftRecords" class="lft-card">
+    <!-- Header -->
+    <div class="entry-header">
+      <div><strong>Doctor:</strong> {{ kft?.submitted_by }}</div>
+      <div><strong>Designation:</strong> {{ kft?.designation }}</div>
+      <div>
+        <strong>Date:</strong> {{ kft?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div>
+        <strong>Time:</strong> {{ kft?.createdAt | date : "shortTime" }}
+      </div>
+
+      <mat-slide-toggle
+        [(ngModel)]="kft.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+
+    <!-- Details -->
+    <div class="cbc-grid" *ngIf="kft.showDetails">
+      <div class="cbc-item"><strong>Urea:</strong> {{ kft.urea }}</div>
+      <div class="cbc-item">
+        <strong>Creatinine:</strong> {{ kft.creatine }}
+      </div>
+      <div class="cbc-item"><strong>Sodium:</strong> {{ kft.na }}</div>
+      <div class="cbc-item"><strong>Potassium:</strong> {{ kft.k }}</div>
+      <div class="cbc-item"><strong>Chloride:</strong> {{ kft.cl }}</div>
+      <div class="cbc-item"><strong>Uric Acid:</strong> {{ kft.uricAcid }}</div>
+    </div>
+  </div>
+</section>
+
+<!-- Urine Test Records -->
+<section *ngIf="urineRecords.length > 0" class="section">
+  <h3 class="sub-heading">Urine Test Records</h3>
+  <div *ngFor="let urine of urineRecords" class="lft-grid">
+    <div class="entry-header">
+      <div><strong>Doctor:</strong> {{ urine?.submitted_by }}</div>
+      <div><strong>Designation:</strong> {{ urine?.designation }}</div>
+      <div>
+        <strong>Date:</strong> {{ urine?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div>
+        <strong>Time:</strong> {{ urine?.createdAt | date : "shortTime" }}
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="urine.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+    <div class="flex-container" *ngIf="urine.showDetails">
+      <div *ngIf="urine.ketones">
+        <strong>Ketones:</strong> {{ urine.ketones }}
+      </div>
+      <div *ngIf="urine.nitrites">
+        <strong>Nitrites :</strong> {{ urine.nitrites }}
+      </div>
+      <div *ngIf="urine.urineCulture">
+        <strong>Urine Culture :</strong> {{ urine.urineCulture }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Coagulation Test Records -->
+<section *ngIf="coagulationRecords.length > 0" class="section">
+  <h3 class="sub-heading">Coagulation Records</h3>
+  <div *ngFor="let record of coagulationRecords" class="lft-grid">
+    <div class="entry-header">
+      <div><strong>Doctor:</strong> {{ record?.submitted_by }}</div>
+      <div><strong>Designation:</strong> {{ record?.designation }}</div>
+      <div>
+        <strong>Date:</strong> {{ record?.createdAt | date : "dd-MM-yyyy" }}
+      </div>
+      <div>
+        <strong>Time:</strong> {{ record?.createdAt | date : "shortTime" }}
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="record.showDetails"
+        color="primary"
+        class="custom-slide-toggle"
+      >
+      </mat-slide-toggle>
+    </div>
+    <div *ngIf="record.showDetails" class="cbc-grid">
+      <div class="cbc-item"><strong>PT/INR:</strong> {{ record.ptinr }}</div>
+      <div class="cbc-item"><strong>APTTT:</strong> {{ record.apttt }}</div>
+      <div class="cbc-item"><strong>D-Dimer:</strong> {{ record.dDimer }}</div>
+    </div>
+  </div>
+</section>

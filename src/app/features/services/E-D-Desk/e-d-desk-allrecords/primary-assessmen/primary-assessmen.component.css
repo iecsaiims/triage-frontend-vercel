@@ -1,0 +1,173 @@
+.assessment-container {
+  padding: 24px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+}
+
+.section {
+  margin-top: 32px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.header_togglebtn {
+  display: flex;
+  align-items: center;
+}
+
+.sub-heading {
+  font-size: 1.3rem;
+  color: #444;
+}
+
+.assessment-item {
+  padding: 12px;
+  font-size: 16px;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.user-header{
+      display: flex;
+    justify-content: space-around;
+}
+::ng-deep .custom-slide-toggle {
+  transform: scale(0.7);
+}
+
+::ng-deep .custom-slide-toggle .mdc-switch__track::after {
+  background: #cfa359 !important;
+}
+
+::ng-deep .mdc-switch--selected .mdc-switch__icon {
+  fill: #cfa359 !important;
+}
+
+.lungs-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.lungs-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.lungs-image {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+}
+.values-section,
+.Circulation-section,
+.Disability-section,
+.bp-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.lungs-contener {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.right-left {
+  text-align: center;
+}
+
+.section-heading {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 12px 0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #0c4074;
+  color: #051323;
+}
+
+.lungs-details {
+  display: flex;
+  margin-top: 10px;
+  gap: 20px;
+}
+
+.lungs-side {
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.lungs-side h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  margin: auto;
+}
+
+.success-snackbar {
+  background: #4caf50 !important;
+  color: white !important;
+}
+
+.error-snackbar {
+  background: #f44336 !important;
+  color: white !important;
+}
+
+.warning-snackbar {
+  background: #ff9800 !important;
+  color: white !important;
+}
+.multi-line-text {
+  white-space: pre-line;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.air-entry {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.Disability-section .form-field{
+  width: 200px;
+}
+.gcs-heading{
+      color: #444;
+    text-align: center;
+    font-size: 1rem;
+    margin: 15px;
+}

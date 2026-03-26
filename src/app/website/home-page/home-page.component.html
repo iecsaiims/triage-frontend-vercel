@@ -1,0 +1,230 @@
+<div class="homepage_container">
+  <header class="header">
+    <div class="header_IconMain">
+      <div class="header__icons">
+        <mat-icon>account_box</mat-icon>
+      </div>
+      <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+    </div>
+    <div class="header_Value">
+      <nav class="header__nav">
+        <span>SMART-ER</span>
+        <div class="header_links">
+          <a routerLink="/">Home</a>
+          <a routerLink="/jobs">Emergency</a>
+          <a routerLink="/career-guidance">OPD</a>
+          <a routerLink="/interview-prep">EMR</a>
+          <a (click)="Login()">Login</a>
+        </div>
+        <div class="header__search">
+          <input type="text" placeholder="Search jobs..." />
+          <button>🔍</button>
+        </div>
+      </nav>
+    </div>
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <a routerLink="/">Home</a>
+      <a routerLink="/jobs">Emergency</a>
+      <a routerLink="/career-guidance">OPD</a>
+      <a routerLink="/interview-prep">EMR</a>
+      <a (click)="Login()">Login</a>
+    </div>
+  </header>
+  <div class="ImageMainCntainer">
+    <div class="background-overlay"></div>
+    <img
+      src="../../../assets/AIIMSRaipur.jpg"
+      alt="AIIMS Raipur HIS Banner"
+      class="image_container"
+    />
+    <section class="hero">
+      <div class="hero-content">
+        <div>
+            
+        </div>
+        <div class="button-group">
+          <button class="cta-button primary" (click)="Login()">
+            Get Started
+          </button>
+          <button
+            class="cta-button secondary"
+            mat-flat-button
+            (click)="Login()"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="animated-cards-section">
+    <h2>SMART-ER Services</h2>
+    <p>Discover a wide range of services provided by SMART-ER</p>
+    <div class="cards-container">
+      <div class="card">
+        <div class="card-image">
+          <img src="../../../assets/T&ee.jpg" alt="Jobs" />
+        </div>
+        <div class="card-content">
+          <h3>Triage Entry Desk</h3>
+          <p>Your first point of contact for emergency cases</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">
+          <img
+            src="../../../assets/trauma.jpg"
+            alt="Guidance"
+          />
+        </div>
+        <div class="card-content">
+          <h3>Emergency Nursing Desk</h3>
+          <p>24/7 nursing assistance and patient care</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">
+          <img
+            src="../../../assets/telephone-triage-impact.jpg"
+            alt="Interview"
+          />
+        </div>
+        <div class="card-content">
+          <h3>E D Desk</h3>
+          <p>First point of contact for emergency cases</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Your Career Journey Starts Here -->
+  <section class="career-guidance">
+    <div class="guidance-container">
+      <div class="guidance-content">
+        <h1>AIIMS Raipur Hospital Information System</h1>
+        <p>
+          Efficiently manage patients, emergency cases, and triage with a
+          smarter HIS platform.
+        </p>
+
+        <button class="cta-button primary">Get Started</button>
+      </div>
+      <div class="guidance-animation">
+        <div class="floating-circle"></div>
+        <div class="gradient-background"></div>
+        <img
+          src="../../../assets/t&E.jpg"
+          alt="Career Guidance"
+          class="animated-image"
+        />
+      </div>
+    </div>
+  </section>
+  <!-- Master Your Interview Skills -->
+  <section class="interview-prep-unique">
+    <div class="unique-container">
+      <div class="unique-content">
+        <h1>Your Hospital Workflow, Simplified</h1>
+        <p>
+          Streamline patient records, emergency cases, and triage management
+          with SMARTY-ER – built to make healthcare efficient and
+          reliable.
+        </p>
+
+        <button class="unique-btn">Start Preparing</button>
+      </div>
+      <div class="unique-image">
+        <div class="image-frame">
+          <img src="../../../assets/AIIMSRaipur.jpg" alt="Interview Prep" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--  -->
+
+  <section class="dashboard-section">
+    <div class="dashboard-header">
+      <h1>Your HIS Dashboard</h1>
+      <p>Access all your tools and insights in one place.</p>
+    </div>
+    <div class="dashboard-grid">
+      <div class="dashboard-box">
+        <div class="icon-container">
+          <img src="../../../assets/images-aiims.jpg" alt="Task Icon" />
+        </div>
+        <h2>Patient Management</h2>
+        <p>
+          Stay organized with patient, emergency, and triage workflows
+          simplified.
+        </p>
+      </div>
+      <div class="dashboard-box">
+        <div class="icon-container">
+          <img src="../../../assets/images-aiims.jpg" alt="Analytics Icon" />
+        </div>
+        <h2>Smart HIS</h2>
+        <p>
+          Monitor patient flow, triage efficiency, and emergency performance in
+          real time.
+        </p>
+      </div>
+      <div class="dashboard-box">
+        <div class="icon-container">
+          <img src="../../../assets/images.jpg" alt="Reports Icon" />
+        </div>
+        <h2>Hospital Analytics</h2>
+        <p>
+          Get detailed insights into patients, emergencies, and triage data for
+          smarter decisions.
+        </p>
+      </div>
+      <div class="dashboard-box">
+        <div class="icon-container">
+          <img src="../../../assets/images.jpg" alt="Settings Icon" />
+        </div>
+        <h2>HIS Settings</h2>
+        <p>
+          Tailor patient, emergency, and triage modules to match hospital needs.
+        </p>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Logo and About -->
+      <div class="footer-about">
+        <h2 class="footer-logo">YourLogo</h2>
+        <p>
+          Empowering your career journey with cutting-edge tools and insights.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Career Guidance</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="footer-social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <p>&copy; 2024 YourCompany. All Rights Reserved.</p>
+    </div>
+  </footer>
+</div>

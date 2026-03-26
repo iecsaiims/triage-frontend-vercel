@@ -1,0 +1,347 @@
+.patient-card {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 20px 20px 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.heding,
+.complaint-row,
+.triage-info-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  text-align: center;
+  margin: 20px 0 16px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.enhanced-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.info-row {
+  background: #fafafa;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border-left: 4px solid #3f51b5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.info-row strong {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.info-row span {
+  font-size: 15px;
+  color: #444;
+}
+.full-width {
+  grid-column: span 2;
+}
+
+mat-form-field {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.complaints-section {
+  grid-column: span 2;
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px dashed #90caf9;
+}
+.ai-box {
+  margin-top: 18px;
+  background: #f0f9ff;
+  border-left: 5px solid #0288d1;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.ai-box h4 {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+  color: #01579b;
+}
+
+.mat-mdc-select-value-text {
+  font-weight: 600;
+}
+
+.mat-option[value="RED"] {
+  color: #fff !important;
+  background: #d32f2f !important;
+}
+
+.mat-option[value="YELLOW"] {
+  background: #fbc02d !important;
+}
+
+.mat-option[value="GREEN"] {
+  background: #388e3c !important;
+  color: #fff !important;
+}
+
+.mat-option[value="BLACK"] {
+  background: #212121 !important;
+  color: #fff !important;
+}
+
+.message-box {
+  margin: 18px auto;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  max-width: 600px;
+  text-align: center;
+}
+
+.success-message {
+  background: #e8f5e9;
+  border: 1px solid #66bb6a;
+  color: #256029;
+  font-size: 15px;
+}
+
+.error-message {
+  background: #ffebee;
+  border: 1px solid #e57373;
+  color: #b71c1c;
+  font-size: 15px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+button {
+  border-radius: 8px !important;
+  padding: 6px 18px !important;
+  font-weight: 500 !important;
+}
+
+.no-patient {
+  text-align: center;
+  margin-top: 50px;
+  color: #666;
+  font-size: 16px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.input-row mat-form-field {
+  flex: 1;
+}
+
+.input-row button {
+  margin-bottom: 17px;
+}
+
+.btn-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.heding {
+  color: #1e3a8a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.viewDetails {
+  display: grid;
+}
+.triage-protocol {
+  margin-top: 0px;
+  cursor: pointer;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  background: #fff;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 900px;
+  height: 80%;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.complaint-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-hint {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+.auto-triage-box {
+  font-size: 13px;
+  background: #f5f7fa;
+  padding: 8px;
+  border-left: 4px solid #1976d2;
+  margin-top: 4px;
+}
+.triage-tools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Auto badge */
+.auto-triage {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.auto-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: default;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* Badge colors (match your light UI) */
+.auto-badge.red { background: #ffe5e5; color: #b71c1c; }
+.auto-badge.yellow { background: #fff4cc; color: #7a5a00; }
+.auto-badge.green { background: #e6f7ea; color: #1b5e20; }
+.auto-badge.black { background: #eceff1; color: #263238; }
+
+/* Popup tooltip */
+.auto-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  display: none; /* show on hover */
+  z-index: 50;
+}
+
+.auto-triage:hover .auto-tooltip {
+  display: block;
+}
+
+.auto-tooltip ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.auto-tooltip li {
+  margin: 6px 0;
+  font-size: 13px;
+  color: #1f2a37;
+}
+
+.auto-triage-wrap {
+  min-width: 260px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.auto-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #1f2a37;
+  margin-bottom: 8px;
+}
+
+.auto-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.auto-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.auto-badge.red { background: #ffe5e5; color: #b71c1c; }
+.auto-badge.yellow { background: #fff4cc; color: #7a5a00; }
+.auto-badge.green { background: #e6f7ea; color: #1b5e20; }
+.auto-badge.black { background: #eceff1; color: #263238; }
+
+.auto-reasons {
+  margin: 0;
+  padding-left: 18px;
+  color: #374151;
+  font-size: 13px;
+}
+
+.auto-reasons li {
+  margin: 4px 0;
+}
+
+

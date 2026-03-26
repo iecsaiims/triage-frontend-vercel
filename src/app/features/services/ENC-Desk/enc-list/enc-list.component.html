@@ -1,0 +1,65 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="table-wrapper">
+    <table class="patient-table">
+      <thead>
+        <tr>
+          <th>S.no</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Patient Name</th>
+          <th>Age / Sex</th>
+          <th>CR no</th>
+          <th>Trauma / Non-Trauma</th>
+          <th>Triage officer</th>
+          <th>Triage Category</th>
+          <th>Consultation</th>
+          <th>Disposition</th>
+        </tr>
+      </thead>
+
+      <tbody>
+     <tr
+  *ngFor="let item of patients; let i = index"
+  (click)="viewPatientDetails(item)"
+  style="cursor: pointer"
+>
+  <td>{{ i + 1 }}</td>
+  <td>{{ item.createdAt | date: 'dd/MM/yyyy' }}</td>
+  <td>{{ item.createdAt | date: 'hh:mm a' }}</td>
+  <td>{{ item.name }}</td>
+  <td>{{ item.age }} / {{ item.gender }}</td>
+  <td>{{ item.crNumber }}</td>
+  <td>{{ item.patientTriage[0]?.emergencyType || 'N/A' }}</td>
+  <td>{{ item.submittedBy }}</td>
+  <td>
+    <span
+      class="triage-badge"
+      [ngClass]="getTriageColorClass(item.patientTriage[0]?.triage)"
+    >
+      {{ item.patientTriage[0]?.triage }}
+    </span>
+  </td>
+  <td>
+    <span
+      class="triage-badge"
+      [ngClass]="getConsultationColorClass(getConsultationStatus(item.id))"
+    >
+      {{ getConsultationStatus(item.id) }}
+    </span>
+  </td>
+  <td>
+    <span
+      class="triage-badge"
+      [ngClass]="getDispositionColorClass(getDispositionStatus(item.id))"
+    >
+      {{ getDispositionStatus(item.id) }}
+    </span>
+  </td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

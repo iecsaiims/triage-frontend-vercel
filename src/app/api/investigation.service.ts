@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,10 +9,13 @@ import { Observable } from 'rxjs';
 export class InvestigationService {
   private baseUrl = 'http://localhost:8000/api/investigation';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   private getHeaders(): HttpHeaders {
-    const token = localStorage?.getItem('authToken');
+    let token = '';
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage?.getItem('authToken') || '';
+    }
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

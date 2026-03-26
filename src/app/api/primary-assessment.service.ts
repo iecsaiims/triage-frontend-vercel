@@ -1,6 +1,7 @@
 // primary-assessment.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,10 +10,13 @@ import { Observable } from 'rxjs';
 export class PrimaryAssessmentService {
   public baseUrl = 'http://localhost:8000/api/primary-assessment';
   private baseUrlSummary = 'http://localhost:8000/api/patient/summary';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   createAssessment(data: any): Observable<any> {
-    const token = localStorage?.getItem('authToken');
+    let token = '';
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage?.getItem('authToken') || '';
+    }
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -22,7 +26,10 @@ export class PrimaryAssessmentService {
   }
 
   getAssessmentByPatientId(patientId: number): Observable<any> {
-    const token = localStorage?.getItem('authToken');
+    let token = '';
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage?.getItem('authToken') || '';
+    }
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -31,7 +38,10 @@ export class PrimaryAssessmentService {
   }
 
   getSummary(patientId: number) {
-    const token = localStorage?.getItem('authToken');
+    let token = '';
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage?.getItem('authToken') || '';
+    }
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });

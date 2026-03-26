@@ -1,6 +1,7 @@
 // point-of-care-test.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,89 +10,51 @@ import { Observable } from 'rxjs';
 export class PointOfCareTestService {
   private baseUrl = 'http://localhost:8000/api/poc-tests';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   savePocus(data: any) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
+    const headers = this.getAuthHeaders();
     return this.http?.post(`${this.baseUrl}/pocus`, data, { headers });
   }
   getPocusByPatientId(patientId: number) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.get(`${this.baseUrl}/pocus/${patientId}`, { headers });
   }
 
   saveEcg(data: FormData) {
-    const token = localStorage?.getItem('authToken');
-    console.log('🔐 Sending token in header:', token);
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    }); // DO NOT SET Content-Type manually for FormData
-
+    const headers = this.getAuthHeaders();
+    console.log('🔐 Sending token in header:', headers.get('Authorization'));
     return this.http?.post(`${this.baseUrl}/ecg`, data, { headers });
   }
   // getEcgByPatientId(patientId: number): Observable<any> {
   getEcgByPatientId(patientId: number) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.get(`${this.baseUrl}/ecg/${patientId}`, { headers });
   }
   // saveBloodGas
   saveBloodGas(data: FormData) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.post(`${this.baseUrl}/blood-gas`, data, { headers });
   }
   // getBloodGas
   getBloodGasByPatientId(patientId: number): Observable<any> {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.get(`${this.baseUrl}/blood-gas/${patientId}`, { headers });
   }
 
   // saveTroponin
   saveTroponin(data: any) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.post(`${this.baseUrl}/troponin`, data, { headers });
   }
   // other test
   saveOtherTest(data: any) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.post(`${this.baseUrl}/other-test`, data, { headers });
   }
   // getTroponinByPatientId(patientId: number): Observable<any> {
   getOtherTestByPatientId(patientId: number) {
-    const token = localStorage?.getItem('authToken');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http?.get(`${this.baseUrl}/other-test/${patientId}`, {
       headers,
     });
@@ -104,7 +67,10 @@ export class PointOfCareTestService {
     return this.http?.get<any>(url, { headers });
   }
   getAuthHeaders() {
-    const token = localStorage?.getItem('authToken');
+    let token = '';
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage?.getItem('authToken') || '';
+    }
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -139,8 +105,7 @@ getXrayData(patientId: number): Observable<any[]> {
     formData.append('ctScanImage', data.ctScanImage);
     formData.append('patientId', data.patientId.toString());
     
-    const token = this.getAuthHeaders();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = this.getAuthHeaders();
 
     return this.http?.post(`${this.baseUrl}/ct-scan`, formData, { headers });
   }

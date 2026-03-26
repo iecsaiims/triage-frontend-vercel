@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
@@ -9,7 +10,7 @@ export class AuthService {
   public baseUrl = 'http://localhost:8000/api/auth';
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
   registerPatient(patient: any): Observable<any> {
     return this.http?.post(`${this.baseUrl}/register`, patient);
   }
@@ -35,6 +36,9 @@ export class AuthService {
   // auth.service.ts
   getCurrentUserFromToken(): any {
     // console.log('Getting user from token');
+    if (!isPlatformBrowser(this.platformId)) {
+      return null;
+    }
     const token = localStorage?.getItem('authToken');
     if (!token) return null;
 

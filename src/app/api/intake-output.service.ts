@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service'; // aapke auth headers ke liye
 
@@ -9,10 +10,13 @@ import { AuthService } from './auth.service'; // aapke auth headers ke liye
 export class IntakeOutputService {
   private apiUrl = 'http://localhost:8000/api/inout';
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
     private getHeaders(): HttpHeaders {
-    const token = localStorage?.getItem('authToken');
+    let token = '';
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage?.getItem('authToken') || '';
+    }
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

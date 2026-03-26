@@ -46,7 +46,7 @@ export class LiveDashboardComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly pollIntervalMs = 30000;
-  private readonly apiBase = 'http://localhost:8000/api';
+  private readonly apiBase = 'https://triage-backend-vercel.vercel.app/api';
 
   protected readonly isDownloading = signal(false);
   protected readonly loading = signal(false);

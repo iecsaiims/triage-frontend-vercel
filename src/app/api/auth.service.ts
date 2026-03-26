@@ -7,7 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class AuthService {
-  public baseUrl = 'http://localhost:8000/api/auth';
+  public baseUrl = 'https://triage-backend-vercel.vercel.app/api/auth';
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
   constructor(public http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}

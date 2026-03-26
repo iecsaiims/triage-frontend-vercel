@@ -69,7 +69,7 @@ export class SummaryComponent implements OnInit {
 
     this.reportContent = this.patientReportService.generatePatientReportHtml(
       this.patientData,
-      "http://localhost:8000/api/files"
+      "https://triage-backend-vercel.vercel.app/api/files"
     );
     this.showPreview = true;
    

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class EncService {
-  baseUrl = 'http://localhost:8000/api/enc';
+  baseUrl = 'https://triage-backend-vercel.vercel.app/api/enc';
 
   constructor(private http: HttpClient) {}
 

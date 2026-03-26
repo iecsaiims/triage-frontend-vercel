@@ -55,7 +55,7 @@ export class NursingSummaryComponent {
     this.patientData = this.removeAndRenameFields(this.patientData, renameMap);
     console.log('patient data ',this.patientData)
     const reportContent =
-      this.patientReportService.generatePatientReportHtml(this.patientData,"http://localhost:8000/api/files") ??
+      this.patientReportService.generatePatientReportHtml(this.patientData,"https://triage-backend-vercel.vercel.app/api/files") ??
       '';
     console.log('Generated Report Content:', reportContent);
     const printWindow = window.open('', '_blank');

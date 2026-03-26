@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class VitalsService {
-  private apiUrl = 'http://localhost:8000/api/vitals';
+  private apiUrl = 'https://triage-backend-vercel.vercel.app/api/vitals';
 
   constructor(private http: HttpClient, private auth: AuthService, @Inject(PLATFORM_ID) private platformId: Object) {}
 

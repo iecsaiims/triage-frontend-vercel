@@ -5,8 +5,8 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class TemplateService {
-  public baseUrl = 'http://localhost:8000/api/templates';
-  public baseUrldisposition = 'http://localhost:8000/api/disposition';
+  public baseUrl = 'https://triage-backend-vercel.vercel.app/api/templates';
+  public baseUrldisposition = 'https://triage-backend-vercel.vercel.app/api/disposition';
   constructor(public http: HttpClient) {}
   emergencycareData(emergencycare: any) {
     return this.http?.post(

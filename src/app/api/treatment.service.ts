@@ -6,7 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class TreatmentService {
-  private baseUrl = 'http://localhost:8000/api/treatment';
+  private baseUrl = 'https://triage-backend-vercel.vercel.app/api/treatment';
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 

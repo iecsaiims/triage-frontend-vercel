@@ -6,7 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class FileService {
-  private baseUrl = 'http://localhost:8000/api/files';
+  private baseUrl = 'https://triage-backend-vercel.vercel.app/api/files';
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -21,7 +21,7 @@ export class FileService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.get(`http://localhost:8000/api/files/${fileName}`, {
+    return this.http.get(`https://triage-backend-vercel.vercel.app/api/files/${fileName}`, {
       headers,
       responseType: 'blob',
     });

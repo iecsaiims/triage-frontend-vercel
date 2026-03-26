@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DiagnosisService {
-  private apiUrl = 'http://localhost:8000/api/diagnosis';
+  private apiUrl = 'https://triage-backend-vercel.vercel.app/api/diagnosis';
 
   constructor(private http: HttpClient) {}
 

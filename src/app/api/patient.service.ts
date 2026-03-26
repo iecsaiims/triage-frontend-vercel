@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class PatientService {
-  public baseUrl = 'http://localhost:8000/api/patient';
+  public baseUrl = 'https://triage-backend-vercel.vercel.app/api/patient';
 
   constructor(public http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 

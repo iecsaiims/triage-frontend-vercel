@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PrimaryAssessmentService {
-  public baseUrl = 'http://localhost:8000/api/primary-assessment';
-  private baseUrlSummary = 'http://localhost:8000/api/patient/summary';
+  public baseUrl = 'https://triage-backend-vercel.vercel.app/api/primary-assessment';
+  private baseUrlSummary = 'https://triage-backend-vercel.vercel.app/api/patient/summary';
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   createAssessment(data: any): Observable<any> {

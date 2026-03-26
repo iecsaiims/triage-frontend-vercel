@@ -8,7 +8,7 @@ import { AuthService } from './auth.service'; // aapke auth headers ke liye
   providedIn: 'root'
 })
 export class IntakeOutputService {
-  private apiUrl = 'http://localhost:8000/api/inout';
+  private apiUrl = 'https://triage-backend-vercel.vercel.app/api/inout';
 
   constructor(private http: HttpClient, private auth: AuthService, @Inject(PLATFORM_ID) private platformId: Object) {}
 

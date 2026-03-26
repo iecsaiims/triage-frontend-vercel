@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NurseHandoverNotesService {
-  private baseUrl = 'http://localhost:8000/api/handover-notes';
+  private baseUrl = 'https://triage-backend-vercel.vercel.app/api/handover-notes';
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
     private getHeaders(): HttpHeaders {

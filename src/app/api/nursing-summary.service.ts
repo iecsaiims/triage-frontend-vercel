@@ -6,7 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class NursingSummaryService {
-   private baseUrlNursingSummary = 'http://localhost:8000/api/patient/nursing-summary';
+   private baseUrlNursingSummary = 'https://triage-backend-vercel.vercel.app/api/patient/nursing-summary';
    constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
    getNursingSummary(patientId: number) {
     let token = '';

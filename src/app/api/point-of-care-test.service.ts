@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PointOfCareTestService {
-  private baseUrl = 'http://localhost:8000/api/poc-tests';
+  private baseUrl = 'https://triage-backend-vercel.vercel.app/api/poc-tests';
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 

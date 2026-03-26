@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EdConsultationService {
-private apiUrl = 'http://localhost:8000/api/ed-consultation'; 
+private apiUrl = 'https://triage-backend-vercel.vercel.app/api/ed-consultation'; 
 
   constructor(private http: HttpClient) {}
 

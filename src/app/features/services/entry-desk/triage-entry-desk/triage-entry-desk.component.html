@@ -1,278 +1,592 @@
 <app-header></app-header>
+
 <mat-card *ngIf="patient" class="patient-card">
   <mat-card-content>
-    <!-- Patient Details -->
+
+    <!-- Patient Details (same as you have) -->
     <div class="section">
       <h3 class="section-title">🩺 Patient Details</h3>
       <div class="info-grid enhanced-info-grid">
         <div class="info-row"><strong>Name:</strong> {{ patient?.name }}</div>
-        <div class="info-row">
-          <strong>CR No:</strong> {{ patient?.crNumber }}
-        </div>
-        <div class="info-row">
-          <strong>Gender:</strong> {{ patient?.gender }}
-        </div>
+        <div class="info-row"><strong>CR No:</strong> {{ patient?.crNumber }}</div>
+        <div class="info-row"><strong>Gender:</strong> {{ patient?.gender }}</div>
         <div class="info-row"><strong>Age:</strong> {{ patient?.age }}</div>
-        <div class="info-row">
-          <strong>Guardian:</strong> {{ patient?.guardianName }}
-        </div>
-        <div class="info-row">
-          <strong>Visit Date:</strong>
-          {{ patient?.createdAt | date : "dd/MM/yyyy" }}
-        </div>
-        <div class="info-row">
-          <strong>Visit Time:</strong>
-          {{ patient?.createdAt | date : "hh:mm:ss a" }}
-        </div>
+        <div class="info-row"><strong>Guardian:</strong> {{ patient?.guardianName }}</div>
+        <div class="info-row"><strong>Visit Date:</strong> {{ patient?.createdAt | date : "dd/MM/yyyy" }}</div>
+        <div class="info-row"><strong>Visit Time:</strong> {{ patient?.createdAt | date : "hh:mm:ss a" }}</div>
       </div>
     </div>
 
     <!-- Triage & Emergency Info -->
     <div class="section">
       <h3 class="section-title">🚑 Triage & Emergency Info</h3>
+
       <form [formGroup]="triageForm" class="form-grid">
-        <div class="info-grid triage-info-grid">
-          <!-- Arrival Mode -->
-          <mat-form-field appearance="outline">
-            <mat-label>Arrival Mode</mat-label>
-            <mat-select formControlName="arrivalMode">
-              <mat-option value="AMBULANCE">Ambulance</mat-option>
-              <mat-option value="SELF">Self</mat-option>
-            </mat-select>
-          </mat-form-field>
 
-          <!-- Referral Status -->
-          <mat-form-field appearance="outline">
-            <mat-label>Referral Status</mat-label>
-            <mat-select formControlName="referralStatus">
-              <mat-option value="DIRECT">Direct</mat-option>
-              <mat-option value="OUTSIDE">Admitted Outside</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <!-- ✅ Smart Conditional Flow via Accordion -->
+        <!-- ✅ Always-visible: Arrival & Type -->
+        <section class="section compact">
+          <div class="section-title">Arrival & Type</div>
 
-          <!-- Emergency Type -->
-          <mat-form-field appearance="outline">
-            <mat-label>Emergency Type</mat-label>
-            <mat-select formControlName="emergencyType">
-              <mat-option value="TRAUMA">TRAUMA</mat-option>
-              <mat-option value="NON-TRAUMA">NON-TRAUMA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-
-
-        <div class="heding">
-          <div class="viewDetails">
+          <div class="info-grid triage-info-grid compact-grid">
             <mat-form-field appearance="outline">
-              <mat-label>Pulse rate</mat-label>
-              <input matInput formControlName="pulse" type="number" />
-              <mat-error *ngIf="triageForm.get('pulse')?.hasError('required')">
-                Pulse is required
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('pulse')?.hasError('min')">
-                Value must be ≥ 0
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('pulse')?.hasError('max')">
-                Value must be ≤ 300
-              </mat-error>
+              <mat-label>Arrival Mode</mat-label>
+              <mat-select formControlName="arrivalMode">
+                <mat-option value="AMBULANCE">Ambulance</mat-option>
+                <mat-option value="SELF">Self</mat-option>
+                <mat-option value="OTHER">Other</mat-option>
+              </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
-              <mat-label>SBP (mmHg)</mat-label>
-              <input matInput formControlName="sbp" type="number" />
-              <mat-error *ngIf="triageForm.get('sbp')?.hasError('required')">
-                SBP is required
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('sbp')?.hasError('min')">
-                Value must be ≥ 0
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('sbp')?.hasError('max')">
-                Value must be ≤ 300
-              </mat-error>
+              <mat-label>Referral Status</mat-label>
+              <mat-select formControlName="referralStatus">
+                <mat-option value="DIRECT">Direct</mat-option>
+                <mat-option value="OUTSIDE">Indirect</mat-option>
+              </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
-              <mat-label>DBP (mmHg)</mat-label>
-              <input matInput formControlName="dbp" />
-              <mat-error *ngIf="triageForm.get('dbp')?.hasError('required')">
-                DBP is required
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('dbp')?.hasError('min')">
-                Value must be ≥ 0
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('dbp')?.hasError('max')">
-                Value must be ≤ 300
-              </mat-error>
+              <mat-label>Emergency Type</mat-label>
+              <mat-select formControlName="emergencyType">
+                <mat-option value="TRAUMA">TRAUMA</mat-option>
+                <mat-option value="NON-TRAUMA">NON-TRAUMA</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
-          <div class="viewDetails">
-            <mat-form-field appearance="outline">
-              <mat-label>RR (/min)</mat-label>
-              <input matInput formControlName="rr" type="number" />
-              <mat-error *ngIf="triageForm.get('rr')?.hasError('required')">
-                Respiratory rate is required
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('rr')?.hasError('min')">
-                Value must be ≥ 0
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('rr')?.hasError('max')">
-                Value must be ≤ 80
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>SpO₂ (%)</mat-label>
-              <input matInput formControlName="spo2" type="number" />
-              <mat-error *ngIf="triageForm.get('spo2')?.hasError('required')">
-                SpO₂ is required
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('spo2')?.hasError('min')">
-                Value must be ≥ 0
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('spo2')?.hasError('max')">
-                Value must be ≤ 100
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Temp (°F)</mat-label>
-              <input matInput formControlName="temp" type="number" />
-              <mat-error *ngIf="triageForm.get('temp')?.hasError('required')">
-                Temperature is required
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('temp')?.hasError('min')">
-                Value must be ≥ 0
-              </mat-error>
-              <mat-error *ngIf="triageForm.get('temp')?.hasError('max')">
-                Value must be ≤ 120
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="heding">
-          <!-- Status -->
-          <mat-form-field appearance="outline">
-            <mat-label>Status</mat-label>
-            <mat-select formControlName="status">
-              <mat-option value="ALERT">Alert</mat-option>
-              <mat-option value="VERBAL">Verbal</mat-option>
-              <mat-option value="PAIN">Pain</mat-option>
-              <mat-option value="UNRESPONSIVE">Unresponsive</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <!-- Triage -->
-          <mat-form-field appearance="outline">
-            <mat-label>Triage</mat-label>
-            <mat-select formControlName="triage">
-              <!-- Auto-triage explanation -->
-              <!-- <div *ngIf="hasAutoReasons" class="auto-triage-box">
-                <strong>Auto-triage reasoning:</strong>
-                <ul>
-                  <li *ngFor="let r of autoReasons">{{ r }}</li>
-                </ul>
-              </div> -->
-              <mat-option value="" disabled>Select triage</mat-option>
-              <mat-option value="RED">RED</mat-option>
-              <mat-option value="YELLOW">YELLOW</mat-option>
-              <mat-option value="GREEN">GREEN</mat-option>
-              <mat-option value="BLACK">BLACK</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <!-- Triage Protocol -->
 
-          <!-- <p class="triage-protocol" (click)="openPdf()">Triage Protocol</p> -->
-          <div class="triage-tools">
-            <!-- Auto-triage badge + popup -->
-            <div class="auto-triage-wrap" *ngIf="autoCategory">
-              <div class="auto-title">Auto-triage suggestion</div>
+          <div class="toggle-inline">
+            <!-- <mat-slide-toggle class="dt-toggle" formControlName="acuteOnset">
+              Acute onset
+            </mat-slide-toggle> -->
 
-              <div class="auto-row">
-                <span class="auto-badge" [ngClass]="autoCategory.toLowerCase()">
-                  {{ autoCategory }}
-                </span>
+            <!-- <mat-slide-toggle class="dt-toggle" formControlName="severePainOrDistress">
+              Severe pain / distress (NRS &gt; 7)
+            </mat-slide-toggle> -->
+            <div class="flow-question">
+              <div class="flow-q-title">
+                Does the patient have severe pain / acute distress? (NRS &gt; 7)
               </div>
 
-              <ul class="auto-reasons" *ngIf="hasAutoReasons">
-                <li *ngFor="let r of autoReasons">{{ r }}</li>
-              </ul>
+              <mat-radio-group formControlName="severePainOrDistress" class="flow-radio-group">
+                <mat-radio-button class="flow-radio yes" [value]="true">
+                  Yes - Severe pain / distress present
+                </mat-radio-button>
+
+                <mat-radio-button class="flow-radio no" [value]="false">
+                  No - Not in severe pain / distress
+                </mat-radio-button>
+              </mat-radio-group>
             </div>
 
-            <!-- Triage Protocol -->
-            <p class="triage-protocol" (click)="openPdf()">Triage Protocol</p>
+
+          </div>
+        </section>
+
+        <!-- ✅ Always-visible: Vitals & Consciousness -->
+        <section class="section compact">
+          <div class="section-title">Vitals & Consciousness</div>
+
+          <div class="heding">
+            <div class="viewDetails">
+              <mat-form-field appearance="outline">
+                <mat-label>Pulse Rate</mat-label>
+                <input matInput type="number" formControlName="pulse" />
+                <mat-error *ngIf="triageForm.get('pulse')?.hasError('max')">
+                  Pulse cannot exceed 300
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>SBP (mmHg)</mat-label>
+                <input matInput type="number" formControlName="sbp" />
+                <mat-error *ngIf="triageForm.get('sbp')?.hasError('max')">
+                  SBP value cannot exceed 300
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>DBP (mmHg)</mat-label>
+                <input matInput type="number" formControlName="dbp" />
+                <mat-error *ngIf="triageForm.get('dbp')?.hasError('max')">
+                  DBP value cannot exceed 300
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Temp (°F)</mat-label>
+                <input matInput type="number" formControlName="temp" />
+                <mat-error *ngIf="triageForm.get('temp')?.hasError('max')">
+                  Temperature value cannot exceed 120
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>RR (/min)</mat-label>
+                <input matInput type="number" formControlName="rr" />
+                <mat-error *ngIf="triageForm.get('rr')?.hasError('max')">
+                  RR value cannot exceed 80
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>SpO₂ (%)</mat-label>
+                <input matInput type="number" formControlName="spo2" />
+                <mat-error *ngIf="triageForm.get('spo2')?.hasError('max')">
+                  SpO₂ value cannot exceed 100
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Consciousness (AVPU)</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option value="ALERT">Alert (A)</mat-option>
+                  <mat-option value="VERBAL">Verbal (V)</mat-option>
+                  <mat-option value="PAIN">Pain (P)</mat-option>
+                  <mat-option value="UNRESPONSIVE">Unresponsive (U)</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="flow-question compact">
+
+            <!-- Airway compromise -->
+            <div class="flow-q-title">
+              Does the patient have airway compromise?
+            </div>
+            <div class="flow-q-hint">
+              Stridor, drooling, noisy breathing, angioedema
+            </div>
+
+            <mat-radio-group formControlName="airwayCompromise" class="flow-radio-inline">
+              <mat-radio-button [value]="true">Yes</mat-radio-button>
+              <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+
+          </div>
+
+          <div class="flow-question compact">
+
+            <!-- Active seizure -->
+            <div class="flow-q-title">
+              Is the patient having an active seizure?
+            </div>
+
+            <mat-radio-group formControlName="seizureNow" class="flow-radio-inline">
+              <mat-radio-button [value]="true">Yes</mat-radio-button>
+              <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+
+          </div>
+
+        </section>
+
+        <!-- ✅ Always-visible: Chief complaint(s) -->
+        <section class="section compact">
+          <div class="section-title">Chief complaint(s)</div>
+
+          <div formArrayName="complaints" class="complaints-section info-grid">
+
+            <div class="voice-row" *ngIf="voiceHint()">
+              <button mat-icon-button type="button" class="mic-small" (click)="toggleVoice()"
+                [color]="listening() ? 'warn' : 'primary'" aria-label="Voice input for complaint">
+                <mat-icon>{{ listening() ? 'mic_off' : 'mic' }}</mat-icon>
+              </button>
+
+              <span class="voice-hint-text">{{ voiceHint() }}</span>
+            </div>
+
+            <div *ngFor="let c of complaints.controls; let i = index" [formGroupName]="i" class="complaint-row">
+              <div class="input-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Complaint</mat-label>
+                  <input matInput formControlName="complaint" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Duration</mat-label>
+                  <input matInput formControlName="duration" />
+                </mat-form-field>
+
+                <div>
+                  <button mat-icon-button color="warn" type="button" (click)="removeComplaint(i)">
+                    <mat-icon>remove_circle</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="add-complaint-wrap">
+              <button mat-stroked-button type="button" (click)="addComplaint()">
+                + Add Complaint
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ✅ Only dropdowns: Trauma + Non-Trauma -->
+        <mat-accordion class="triage-accordion" multi>
+
+          <!-- Panel: TRAUMA Decision -->
+          <mat-expansion-panel *ngIf="isTrauma">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Trauma Decision</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="t-flow">
+
+              <div class="lane-intro">
+                Please select the following trauma criteria if any.
+              </div>
+
+              <!-- High-risk anatomy -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="tAnatomyOpen = !tAnatomyOpen">
+                  <span class="flow-title">Any High-risk anatomy present?</span>
+                  <mat-icon class="flow-icon">{{ tAnatomyOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="tAnatomyOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of traumaAnatomyOptions"
+                      (click)="toggleSelection('traumaAnatomy', o.code, !isSelected('traumaAnatomy', o.code))">
+
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('traumaAnatomy', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('traumaAnatomy', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- High-risk mechanism -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="tMechOpen = !tMechOpen">
+                  <span class="flow-title">High-risk mechanism</span>
+                  <mat-icon class="flow-icon">{{ tMechOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="tMechOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of traumaMechanismOptions"
+                      (click)="toggleSelection('traumaMechanism', o.code, !isSelected('traumaMechanism', o.code))">
+
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('traumaMechanism', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('traumaMechanism', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Special situations -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="tSpecialOpen = !tSpecialOpen">
+                  <span class="flow-title">Any Particular situations present?</span>
+                  <mat-icon class="flow-icon">{{ tSpecialOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="tSpecialOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of traumaSpecialOptions"
+                      (click)="toggleSelection('traumaSpecial', o.code, !isSelected('traumaSpecial', o.code))">
+
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('traumaSpecial', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('traumaSpecial', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="lane-divider"></div>
+
+              <!-- Low-risk gate (Yes/No radios) -->
+              <div class="flow-section">
+                <!-- <div class="flow-head static-head">
+                  <span class="flow-title">Low-risk gate</span>
+                </div> -->
+
+                <div class="flow-body">
+                  <!-- Ambulatory in ED -->
+                  <div class="yn-row yn-stack">
+                    <div class="yn-q">Patient ambulatory in ED?</div>
+                    <mat-radio-group class="yn-group" [value]="triageForm.get('ambulatoryInEd')?.value"
+                      (change)="setYesNo('ambulatoryInEd', $event.value)">
+                      <mat-radio-button class="yn-radio" [value]="true">Yes</mat-radio-button>
+                      <mat-radio-button class="yn-radio" [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+
+                  <!-- On anticoagulation -->
+                  <div class="yn-row yn-stack">
+                    <div class="yn-q">Is the patient on anticoagulation?</div>
+                    <mat-radio-group class="yn-group" [value]="triageForm.get('onAnticoagulation')?.value"
+                      (change)="setYesNo('onAnticoagulation', $event.value)">
+                      <mat-radio-button class="yn-radio" [value]="true">Yes</mat-radio-button>
+                      <mat-radio-button class="yn-radio" [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- NCCT head indications -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="tNcctOpen = !tNcctOpen">
+                  <span class="flow-title">Any indication for NCCT head?</span>
+                  <mat-icon class="flow-icon">{{ tNcctOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="tNcctOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of ncctHeadOptions"
+                      (click)="toggleSelection('ncctHead', o.code, !isSelected('ncctHead', o.code))">
+
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('ncctHead', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('ncctHead', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </mat-expansion-panel>
+
+
+          <!-- Panel: NON-TRAUMA Decision -->
+          <mat-expansion-panel *ngIf="isNonTrauma">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Non-Trauma Decision</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="none-of-above-row">
+              <mat-checkbox formControlName="noneOfTheAbove" class="none-check">
+                None of the following applied
+              </mat-checkbox>
+            </div>
+            <div class="lane-divider"></div>
+            <div class="nt-flow">
+              <div class="lane-intro">
+                Please select the following conditions if any.
+              </div>
+
+              <!-- Immediate RED -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="ntImmediateOpen = !ntImmediateOpen">
+                  <span class="flow-title">Any immediate RED conditions present?</span>
+                  <mat-icon class="flow-icon">{{ ntImmediateOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="ntImmediateOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of nonTraumaImmediateRedOptions"
+                      (click)="toggleSelection('nonTraumaImmediateRed', o.code, !isSelected('nonTraumaImmediateRed', o.code))">
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('nonTraumaImmediateRed', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('nonTraumaImmediateRed', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Time-sensitive -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="ntTimeOpen = !ntTimeOpen">
+                  <span class="flow-title">Any time-sensitive conditions (&lt;24h) present?</span>
+                  <mat-icon class="flow-icon">{{ ntTimeOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="ntTimeOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of timeSensitiveOptions"
+                      (click)="toggleSelection('timeSensitive', o.code, !isSelected('timeSensitive', o.code))">
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('timeSensitive', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('timeSensitive', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- High-risk bleeding -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="ntBleedingOpen = !ntBleedingOpen">
+                  <span class="flow-title">High-risk bleeding</span>
+                  <mat-icon class="flow-icon">{{ ntBleedingOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="ntBleedingOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of highRiskBleedingOptions"
+                      (click)="toggleSelection('highRiskBleeding', o.code, !isSelected('highRiskBleeding', o.code))">
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('highRiskBleeding', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('highRiskBleeding', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <!-- High-risk fever -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="ntFeverOpen = !ntFeverOpen">
+                  <span class="flow-title">High-risk fever</span>
+                  <mat-icon class="flow-icon">{{ ntFeverOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="ntFeverOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of feverDangerOptions"
+                      (click)="toggleSelection('feverDanger', o.code, !isSelected('feverDanger', o.code))">
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('feverDanger', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('feverDanger', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Minor / low-risk -->
+              <div class="flow-section">
+                <button type="button" class="flow-head" (click)="ntMinorOpen = !ntMinorOpen">
+                  <span class="flow-title">Minor / low-risk conditions present?</span>
+                  <mat-icon class="flow-icon">{{ ntMinorOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </button>
+
+                <div class="flow-body" *ngIf="ntMinorOpen">
+                  <div class="checklist">
+                    <div class="cb-row" *ngFor="let o of minorLowRiskOptions"
+                      (click)="toggleSelection('minorLowRisk', o.code, !isSelected('minorLowRisk', o.code))">
+                      <input class="cb-native" type="checkbox" [checked]="isSelected('minorLowRisk', o.code)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleSelection('minorLowRisk', o.code, $any($event.target).checked)"
+                        [attr.aria-label]="o.label" />
+
+                      <div class="cb-text">{{ o.label }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </mat-expansion-panel>
+
+
+        </mat-accordion>
+
+
+
+
+
+
+        <!-- ✅ Keep triage UI the same layout -->
+        <div class="triage-controls">
+          <div class="triage-split">
+            <div class="triage-select">
+              <div class="triage-label">Triage</div>
+              <div class="triage-button-group" role="group" aria-label="Triage selection">
+                <button mat-button type="button" class="triage-seg seg-red"
+                  [class.selected]="triageForm.get('triage')?.value === 'RED'"
+                  (click)="triageForm.get('triage')?.setValue('RED')">RED</button>
+
+                <button mat-button type="button" class="triage-seg seg-yellow"
+                  [class.selected]="triageForm.get('triage')?.value === 'YELLOW'"
+                  (click)="triageForm.get('triage')?.setValue('YELLOW')">YELLOW</button>
+
+                <button mat-button type="button" class="triage-seg seg-green"
+                  [class.selected]="triageForm.get('triage')?.value === 'GREEN'"
+                  (click)="triageForm.get('triage')?.setValue('GREEN')">GREEN</button>
+
+                <button mat-button type="button" class="triage-seg seg-black"
+                  [class.selected]="triageForm.get('triage')?.value === 'BLACK'"
+                  (click)="triageForm.get('triage')?.setValue('BLACK')">BLACK</button>
+              </div>
+            </div>
+
+            <div class="triage-protocol-wrap" [class.no-auto]="!autoCategory">
+
+              <!-- When auto-triage exists: one card, protocol as footer -->
+              <div class="auto-card" *ngIf="autoCategory">
+                <div class="auto-triage-wrap">
+                  <div class="auto-title">Auto-triage suggestion</div>
+
+                  <div class="auto-row">
+                    <span class="auto-badge" [ngClass]="autoCategory.toLowerCase()">{{ autoCategory }}</span>
+                  </div>
+
+                  <ul class="auto-reasons" *ngIf="hasAutoReasons">
+                    <li *ngFor="let r of autoReasons">{{ r }}</li>
+                  </ul>
+                </div>
+
+                <div class="auto-footer">
+                  <button mat-raised-button class="triage-protocol" type="button" (click)="openPdf()">
+                    Triage Protocol
+                  </button>
+                </div>
+              </div>
+
+              <!-- When no auto-triage: small encapsulated protocol card -->
+              <div class="protocol-only-card" *ngIf="!autoCategory">
+                <button mat-raised-button class="triage-protocol" type="button" (click)="openPdf()">
+                  Triage Protocol
+                </button>
+              </div>
+
+            </div>
           </div>
 
           <!-- Modal -->
           <div class="modal" [ngClass]="{ show: isPdfOpen }" (click)="closeOnOutside($event)">
             <div class="modal-content" (click)="$event.stopPropagation()">
               <span class="close" (click)="closePdf()">&times;</span>
-              <iframe src="../../../../../assets/pdf/aiims-raipur-triage.pdf" width="100%" height="600px"
-                style="border: none" title="AIIMS Raipur Triage PDF Document">
+              <iframe *ngIf="isPdfOpen" src="../../../../../assets/pdf/aiims-raipur-triage.pdf"
+                title="AIIMS Raipur Triage PDF Document">
               </iframe>
             </div>
           </div>
-
         </div>
-        <!-- Complaints -->
-        <div formArrayName="complaints" class="complaints-section info-grid">
-          <div class="complaint-header">
-            <h4 class="heding">Chief complaint(s)</h4>
 
-            <!-- 🎤 Voice Input Button -->
-            <button mat-icon-button type="button" (click)="toggleVoice()" [color]="listening() ? 'warn' : 'primary'"
-              aria-label="Voice input for complaint">
-              <mat-icon>{{ listening() ? 'mic_off' : 'mic' }}</mat-icon>
-            </button>
-          </div>
-
-          <!-- Voice status hint -->
-          <div class="voice-hint" *ngIf="voiceHint()">
-            {{ voiceHint() }}
-          </div>
-
-          <div *ngFor="let c of complaints.controls; let i = index" [formGroupName]="i" class="complaint-row">
-            <div class="input-row">
-              <mat-form-field appearance="outline">
-                <mat-label>Complaint</mat-label>
-                <input matInput formControlName="complaint" />
-                <mat-error *ngIf="c.get('complaint')?.hasError('required')">
-                  Complaint is required
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Duration</mat-label>
-                <input matInput formControlName="duration" />
-                <mat-error *ngIf="c.get('duration')?.hasError('required')">
-                  Duration is required
-                </mat-error>
-              </mat-form-field>
-
-              <!-- Remove Button -->
-              <div>
-                <button mat-icon-button color="warn" type="button" (click)="removeComplaint(i)">
-                  <mat-icon>remove_circle</mat-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="heding">
-            <button mat-stroked-button color="primary" type="button" (click)="addComplaint()">
-              + Add Complaint
-            </button>
-          </div>
-        </div>
       </form>
     </div>
+
   </mat-card-content>
 
-  <!-- Success/Error -->
   <div *ngIf="successMessage" class="message-box">
     <span class="success-message">{{ successMessage }}</span>
   </div>
 
-  <!-- Buttons -->
   <mat-card-actions class="button-row">
-    <button mat-stroked-button color="accent" (click)="saveDraft()">
-      Save Draft
-    </button>
+    <button mat-stroked-button color="accent" (click)="saveDraft()">Save Draft</button>
     <button mat-raised-button color="primary" (click)="saveTriageInfo()" [disabled]="isSubmitting">
       {{ isSubmitting ? "Saving..." : "Submit" }}
     </button>
@@ -281,10 +595,7 @@
   </mat-card-actions>
 </mat-card>
 
-<!-- Fallback -->
 <div *ngIf="!patient" class="no-patient">
   <p>Patient not found.</p>
-  <button mat-raised-button color="primary" (click)="cancel()">
-    Back to List
-  </button>
+  <button mat-raised-button color="primary" (click)="cancel()">Back to List</button>
 </div>
